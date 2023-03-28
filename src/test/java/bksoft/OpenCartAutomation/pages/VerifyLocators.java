@@ -1,6 +1,9 @@
 package bksoft.OpenCartAutomation.pages;
 
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -22,7 +25,12 @@ public class VerifyLocators {
 //-----------------------------------------------------------------------------//
 
 		HomePage hp = new HomePage();
-		hp.currencyClick();
+		
+		hp.currency.click();
+		List<WebElement> li = hp.getCurrencyList();
+		for(WebElement el:li) {
+			System.out.println(el.getText());
+		}
 
 //-----------------------------------------------------------------------------//
 		Thread.sleep(4000);
