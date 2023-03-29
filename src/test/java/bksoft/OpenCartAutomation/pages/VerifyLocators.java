@@ -26,8 +26,8 @@ public class VerifyLocators {
 
 		HomePage hp = new HomePage();
 		
-		hp.currency.click();
-		List<WebElement> li = hp.getCurrencyList();
+		hp.myAccount.click();
+		List<WebElement> li = hp.getAccoountOptions();
 		for(WebElement el:li) {
 			System.out.println(el.getText());
 		}
