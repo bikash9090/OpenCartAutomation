@@ -8,9 +8,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 
-import bksoft.OpenCartAutomation.utils.PageActionUtil;
+import bksoft.OpenCartAutomation.utils.PageActionsUtil;
 
-public class HomePage extends PageActionUtil {
+public class HomePage extends PageActionsUtil {
 
 	WebDriver driver;
 

@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class PropertiesUtil {
 
-	String path = "C:\\Users\\sethy\\eclipse-workspace\\OpenCartAutomation\\resources\\config.properties";
+	String path =  System.getProperty("user.dir")+"\\resources\\config.properties";
 	Properties prop;
 
 	public PropertiesUtil() {
@@ -22,9 +22,12 @@ public class PropertiesUtil {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String getUrl() {
 		return prop.getProperty("appUrl");
 	}
 
+	public String getBrowser() {
+		return prop.getProperty("browser");
+	}
 }

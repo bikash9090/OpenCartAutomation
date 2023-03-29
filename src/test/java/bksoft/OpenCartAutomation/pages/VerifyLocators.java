@@ -6,10 +6,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 
-import bksoft.OpenCartAutomation.utils.PageActionUtil;
+import bksoft.OpenCartAutomation.utils.PageActionsUtil;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class VerifyLocators extends PageActionUtil{
+public class VerifyLocators extends PageActionsUtil{
 	public static WebDriver driver;
 
 	public static void main(String[] args) throws InterruptedException {
