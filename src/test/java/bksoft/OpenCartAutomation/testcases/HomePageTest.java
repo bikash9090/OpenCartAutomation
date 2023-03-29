@@ -11,7 +11,7 @@ public class HomePageTest extends TestBase {
 	@Test
 	public void productCategoryTest() throws InterruptedException {
 
-		Thread.sleep(3000);
+		
 	}
 
 }
