@@ -4,30 +4,30 @@ import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 
+import bksoft.OpenCartAutomation.utils.PageActionUtil;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class VerifyLocators {
+public class VerifyLocators extends PageActionUtil{
 	public static WebDriver driver;
 
 	public static void main(String[] args) throws InterruptedException {
 
 		String url = "https://demo.opencart.com/";
 
-		WebDriverManager.firefoxdriver().setup();
+		WebDriverManager.edgedriver().setup();
 		//EdgeOptions eo = new EdgeOptions();
 
-		driver = new FirefoxDriver();
+		driver = new EdgeDriver();
 
 		driver.get(url);
 		driver.manage().window().maximize();
 //-----------------------------------------------------------------------------//
 
-		HomePage hp = new HomePage();
+		HomePage hp = new HomePage(driver);
 		
-		hp.myAccount.click();
-		List<WebElement> li = hp.getAccoountOptions();
+		List<WebElement> li = hp.getProductCategories();
 		for(WebElement el:li) {
 			System.out.println(el.getText());
 		}
