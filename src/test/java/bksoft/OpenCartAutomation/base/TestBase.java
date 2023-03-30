@@ -1,5 +1,7 @@
 package bksoft.OpenCartAutomation.base;
 
+import java.time.Duration;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -32,6 +34,7 @@ public class TestBase {
 
 		driver.get(readconfig.getUrl());
 		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
 	}
 
 	@AfterMethod
