@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
@@ -13,69 +14,128 @@ import bksoft.OpenCartAutomation.utils.PageActionsUtil;
 public class HomePage extends PageActionsUtil {
 
 	WebDriver driver;
+	Actions action;
 
 	/*------------------------------Locators-----------------------------------*/
 
 	@FindBy(xpath = "//*[@id=\"form-currency\"]/div/a/span")
-	WebElement currency;
+	private WebElement currency;
 
 	@FindBys({ @FindBy(xpath = "//ul[@data-popper-placement=\"bottom-start\"]"), @FindBy(tagName = "li") })
-	List<WebElement> currencyList;
+	private List<WebElement> currencyList;
 
 	@FindBy(xpath = "//*[@id=\"top\"]/div[2]/div[2]/ul/li[1]/span")
-	WebElement phone;
+	private WebElement phone;
 
 	@FindBy(xpath = "//*[@id=\"top\"]/div[2]/div[2]/ul/li[2]/div/a/span")
-	WebElement myAccount;
+	private WebElement myAccount;
 
-	@FindBys({ @FindBy(xpath = "//*[@id=\"top\"]/div[2]/div[2]/ul/li[2]/div/ul"), @FindBy(tagName = "li") })
-	List<WebElement> myAccoutOptions;
+	@FindBy(linkText = "Register")
+	private WebElement register;
+
+	@FindBy(linkText = "Login")
+	private WebElement login;
 
 	@FindBy(xpath = "//*[@id=\"wishlist-total\"]/span")
-	WebElement wishList;
+	private WebElement wishList;
 
 	@FindBy(xpath = "//*[@id=\"top\"]/div[2]/div[2]/ul/li[4]/a/span")
-	WebElement shoppingCart;
+	private WebElement shoppingCart;
 
 	@FindBy(xpath = "//*[@id=\"top\"]/div[2]/div[2]/ul/li[5]/a/span")
-	WebElement checkout;
+	private WebElement checkout;
 
 	@FindBy(xpath = "//*[@id=\"logo\"]/a/img")
-	WebElement logo;
+	private WebElement logo;
 
 	@FindBy(xpath = "//input[@type=\"text\" and @name=\"search\"]")
-	WebElement searchBar;
+	private WebElement searchBar;
 
 	@FindBy(xpath = "//*[@id=\"search\"]/button")
-	WebElement searchBtn;
+	private WebElement searchBtn;
 
 	@FindBy(xpath = "//*[@id=\"header-cart\"]/div/button")
-	WebElement items;
+	private WebElement items;
 
 	@FindBys({ @FindBy(xpath = "//*[@id=\"narbar-menu\"]/ul"), @FindBy(xpath = "./li/*[1]") })
-	List<WebElement> productCategory;
+	private List<WebElement> productCategories;
 
 	/*------------------------------Constructor----------------------------------*/
 
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
+		action = new Actions(driver);
 	}
 
 	/*-----------------------Lazy initialization methods--------------------------*/
 
 	/*-------------------------Generic actions methods-----------------------------*/
 
-	public List<WebElement> getCurrencyList() {
-		return currencyList;
+	public void selectCurrency(String cr) {
+		currency.click();
+		for (WebElement cur : currencyList) {
+			if (cur.getText().toLowerCase().contains(cr)) {
+				cur.click();
+				break;
+			}
+		}
 	}
 
-	public List<WebElement> getAccoountOptions() {
-		return myAccoutOptions;
+	public void clickOnRegister() {
+		myAccount.click();
+		register.click();
 	}
 
-	public List<WebElement> getProductCategories() {
-		return productCategory;
+	public void clickOnLogin() {
+		myAccount.click();
+		login.click();
+	}
+
+	public void clickOnWishList() {
+		wishList.click();
+	}
+
+	public void clickOnShoppingCart() {
+		shoppingCart.click();
+	}
+
+	public void clickOnCheckout() {
+		checkout.click();
+	}
+
+	public void clickOnLogo() {
+		logo.click();
+	}
+
+	public void searchItem(String query) {
+		searchBar.sendKeys(query);
+		searchBtn.click();
+	}
+
+	public void clickOnCartItems() {
+		items.click();
+	}
+
+	public void hoverOverCategory(String cat) {
+		for (WebElement category : productCategories) {
+			if (category.getText().equalsIgnoreCase(cat)) {
+				action.moveToElement(category).build().perform();
+				break;
+			}
+		}
+	}
+
+	public void clickOnSubCategory() {
+	}
+
+	public void clickOnCategory(String cat) {
+		for (WebElement category : productCategories) {
+			if (category.getText().equalsIgnoreCase(cat)) {
+				category.click();
+				break;
+			}
+		}
 	}
 
 }
