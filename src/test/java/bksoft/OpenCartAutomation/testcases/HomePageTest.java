@@ -9,8 +9,12 @@ public class HomePageTest extends TestBase {
 	HomePage hp;
 
 	@Test
-	public void productCategoryTest() throws InterruptedException {
-
+	public void validatingHomepageLocatorsFunctionality() throws InterruptedException {
+		hp = new HomePage(driver);
+		
+		hp.hoverOverCategory("Desktops");
+		//hp.clickOnSubCategory();
+		Thread.sleep(3000);
 		
 	}
 
