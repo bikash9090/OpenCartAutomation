@@ -13,7 +13,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class TestBase {
 
 	PropertiesUtil readconfig = new PropertiesUtil();
-	static WebDriver driver;
+	public WebDriver driver;
 
 	@BeforeMethod
 	public void setUp() {
