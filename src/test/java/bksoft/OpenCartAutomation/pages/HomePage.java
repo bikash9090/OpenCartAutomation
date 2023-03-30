@@ -64,7 +64,7 @@ public class HomePage extends PageActionsUtil {
 
 	/*-----------------------Lazy initialization methods--------------------------*/
 
-	/*-------------------------Generic action methods-----------------------------*/
+	/*-------------------------Generic actions methods-----------------------------*/
 
 	public List<WebElement> getCurrencyList() {
 		return currencyList;
