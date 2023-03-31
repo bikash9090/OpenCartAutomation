@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 import bksoft.OpenCartAutomation.utils.PageActionsUtil;
@@ -68,6 +69,13 @@ public class HomePage extends PageActionsUtil {
 
 	private List<WebElement> subCategories;
 
+	@FindBys({ @FindBy(xpath = "//*[@id=\"content\"]/div[2]"),
+			@FindBy(xpath = "./descendant::div[@class=\"description\"]"), @FindBy(xpath = "./child::h4") })
+	private List<WebElement> featuredProductTitles;
+	
+	@FindBy(how = How.LINK_TEXT, using = "")
+	private WebElement link;
+
 	/*------------------------------Constructor----------------------------------*/
 
 	public HomePage(WebDriver driver) {
@@ -77,6 +85,9 @@ public class HomePage extends PageActionsUtil {
 	}
 
 	/*-----------------------Lazy initialization methods--------------------------*/
+	public void clickByhref(WebElement element) {
+		this.link = element;
+	}
 
 	/*-------------------------Generic actions methods-----------------------------*/
 
@@ -126,7 +137,7 @@ public class HomePage extends PageActionsUtil {
 	public void clickOnCartItems() {
 		items.click();
 	}
-	
+
 	public void clickOnCategory(String cat) {
 		for (WebElement category : productCategories) {
 			if (category.getText().equalsIgnoreCase(cat)) {
@@ -157,4 +168,15 @@ public class HomePage extends PageActionsUtil {
 			}
 		}
 	}
+
+	public void clickOnFeaturedProduct(String fprod) {
+		for (WebElement featured : featuredProductTitles) {
+			System.out.println(featured.getText());
+			if (featured.getText().equalsIgnoreCase(fprod)) {
+				clickByhref(featured);
+				break;
+			}
+		}
+	}
+
 }
