@@ -11,12 +11,22 @@ public class HomePageTest extends TestBase {
 	@Test
 	public void validatingHomepageLocatorsFunctionality() throws InterruptedException {
 		hp = new HomePage(driver);
-		
-		hp.hoverOverCategory("desktops");
-		hp.clickOnSubCategory("pc");
-		//hp.clickOnSubCategory();
+
+		// hp.selectCurrency("dollar");
+		// hp.clickOnMyAccount();
+		// hp.clickOnRegister();
+		// hp.clickOnLogin();
+		// hp.clickOnWishList();
+		// hp.clickOnShoppingCart();
+		// hp.clickOnCheckout();
+		// hp.clickOnLogo();
+		// hp.searchItem("iPhone 13");
+		// hp.clickOnCartItems();
+		// hp.clickOnCategory("desktops");
+		// hp.hoverOverCategory("components");
+		// hp.clickOnSubCategory("printers");
+
 		Thread.sleep(4000);
-		
 	}
 
 }
