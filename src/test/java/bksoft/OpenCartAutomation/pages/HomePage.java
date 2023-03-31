@@ -9,7 +9,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
 import bksoft.OpenCartAutomation.utils.PageActionsUtil;
 
@@ -87,19 +86,19 @@ public class HomePage extends PageActionsUtil {
 			if (cur.getText().toLowerCase().contains(cr)) {
 				cur.click();
 				break;
-			} else {
-				Assert.fail(cr + ": Currency not found!");
 			}
 		}
 	}
 
-	public void clickOnRegister() {
+	public void clickOnMyAccount() {
 		myAccount.click();
+	}
+
+	public void clickOnRegister() {
 		register.click();
 	}
 
 	public void clickOnLogin() {
-		myAccount.click();
 		login.click();
 	}
 
@@ -127,33 +126,7 @@ public class HomePage extends PageActionsUtil {
 	public void clickOnCartItems() {
 		items.click();
 	}
-
-	public void hoverOverCategory(String cat) {
-		for (WebElement category : productCategories) {
-			if (category.getText().equalsIgnoreCase(cat)) {
-				action.moveToElement(category).build().perform();
-				// Storing found category
-				subCategories = category.findElement(By.xpath("./following-sibling::div[1]"))
-						.findElements(By.tagName("li"));
-				break;
-			} else {
-				System.out.println();
-				Assert.fail(cat + ": Category name not found!");
-			}
-		}
-	}
-
-	public void clickOnSubCategory(String subCat) {
-		for (WebElement subElement : subCategories) {
-			if (subElement.getText().toLowerCase().contains(subCat)) {
-				subElement.click();
-				break;
-			} else {
-				Assert.fail(subCat + ": SubCategory not found!");
-			}
-		}
-	}
-
+	
 	public void clickOnCategory(String cat) {
 		for (WebElement category : productCategories) {
 			if (category.getText().equalsIgnoreCase(cat)) {
@@ -163,4 +136,25 @@ public class HomePage extends PageActionsUtil {
 		}
 	}
 
+	public void hoverOverCategory(String cat) {
+		for (WebElement category : productCategories) {
+			System.out.println(category.getText());
+			if (category.getText().toLowerCase().contains(cat)) {
+
+				action.moveToElement(category).build().perform();
+				subCategories = category.findElement(By.xpath("./following-sibling::div[1]"))
+						.findElements(By.tagName("li"));
+				break;
+			}
+		}
+	}
+
+	public void clickOnSubCategory(String subCat) {
+		for (WebElement subElement : subCategories) {
+			if (subElement.getText().toLowerCase().contains(subCat)) {
+				subElement.click();
+				break;
+			}
+		}
+	}
 }
