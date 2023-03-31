@@ -2,12 +2,14 @@ package bksoft.OpenCartAutomation.pages;
 
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import bksoft.OpenCartAutomation.utils.PageActionsUtil;
 
@@ -60,6 +62,13 @@ public class HomePage extends PageActionsUtil {
 	@FindBys({ @FindBy(xpath = "//*[@id=\"narbar-menu\"]/ul"), @FindBy(xpath = "./li/*[1]") })
 	private List<WebElement> productCategories;
 
+	// WebElement foundCategory;
+	// WebElement subCategory =
+	// foundCategory.findElement(By.xpath("./following-sibling::div[1]"));
+	List<WebElement> subcategoryElements;
+
+	private List<WebElement> subCategories;
+
 	/*------------------------------Constructor----------------------------------*/
 
 	public HomePage(WebDriver driver) {
@@ -78,6 +87,8 @@ public class HomePage extends PageActionsUtil {
 			if (cur.getText().toLowerCase().contains(cr)) {
 				cur.click();
 				break;
+			} else {
+				Assert.fail(cr + ": Currency not found!");
 			}
 		}
 	}
@@ -121,12 +132,26 @@ public class HomePage extends PageActionsUtil {
 		for (WebElement category : productCategories) {
 			if (category.getText().equalsIgnoreCase(cat)) {
 				action.moveToElement(category).build().perform();
+				// Storing found category
+				subCategories = category.findElement(By.xpath("./following-sibling::div[1]"))
+						.findElements(By.tagName("li"));
 				break;
+			} else {
+				System.out.println();
+				Assert.fail(cat + ": Category name not found!");
 			}
 		}
 	}
 
-	public void clickOnSubCategory() {
+	public void clickOnSubCategory(String subCat) {
+		for (WebElement subElement : subCategories) {
+			if (subElement.getText().toLowerCase().contains(subCat)) {
+				subElement.click();
+				break;
+			} else {
+				Assert.fail(subCat + ": SubCategory not found!");
+			}
+		}
 	}
 
 	public void clickOnCategory(String cat) {
