@@ -12,9 +12,10 @@ public class HomePageTest extends TestBase {
 	public void validatingHomepageLocatorsFunctionality() throws InterruptedException {
 		hp = new HomePage(driver);
 		
-		hp.hoverOverCategory("Desktops");
+		hp.hoverOverCategory("desktops");
+		hp.clickOnSubCategory("pc");
 		//hp.clickOnSubCategory();
-		Thread.sleep(3000);
+		Thread.sleep(4000);
 		
 	}
 
