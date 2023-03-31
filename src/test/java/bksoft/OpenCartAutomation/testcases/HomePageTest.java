@@ -25,8 +25,9 @@ public class HomePageTest extends TestBase {
 		// hp.clickOnCategory("desktops");
 		// hp.hoverOverCategory("components");
 		// hp.clickOnSubCategory("printers");
+		hp.clickOnFeaturedProduct("MacBook");
 
-		Thread.sleep(4000);
+		Thread.sleep(5000);
 	}
 
 }
