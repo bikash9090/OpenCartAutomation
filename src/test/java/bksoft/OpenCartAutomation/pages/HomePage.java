@@ -62,11 +62,6 @@ public class HomePage extends PageActionsUtil {
 	@FindBys({ @FindBy(xpath = "//*[@id=\"narbar-menu\"]/ul"), @FindBy(xpath = "./li/*[1]") })
 	private List<WebElement> productCategories;
 
-	// WebElement foundCategory;
-	// WebElement subCategory =
-	// foundCategory.findElement(By.xpath("./following-sibling::div[1]"));
-	List<WebElement> subcategoryElements;
-
 	private List<WebElement> subCategories;
 
 	@FindBys({ @FindBy(xpath = "//*[@id=\"content\"]/div[2]"),
