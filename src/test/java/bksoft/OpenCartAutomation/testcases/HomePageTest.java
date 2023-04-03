@@ -8,7 +8,7 @@ import bksoft.OpenCartAutomation.pages.HomePage;
 public class HomePageTest extends TestBase {
 	HomePage hp;
 
-	@Test
+	@Test()
 	public void validatingHomepageLocatorsFunctionality() throws InterruptedException {
 		hp = new HomePage(driver);
 
@@ -25,7 +25,7 @@ public class HomePageTest extends TestBase {
 		// hp.clickOnCategory("desktops");
 		// hp.hoverOverCategory("components");
 		// hp.clickOnSubCategory("printers");
-		hp.clickOnFeaturedProduct("Canon eos");
+		hp.clickOnFeaturedProductTitle("canon eos");
 
 		Thread.sleep(5000);
 	}
