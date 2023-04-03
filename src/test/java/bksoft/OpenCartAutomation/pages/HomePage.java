@@ -70,9 +70,9 @@ public class HomePage extends PageActionsUtil {
 	private List<WebElement> subCategories;
 
 	@FindBys({ @FindBy(xpath = "//*[@id=\"content\"]/div[2]"),
-			@FindBy(xpath = "./descendant::div[@class=\"description\"]"), @FindBy(xpath = "./child::h4") })
+			@FindBy(xpath = "./descendant::div[@class=\"description\"]"), @FindBy(xpath = "./child::h4/a") })
 	private List<WebElement> featuredProductTitles;
-	
+
 	@FindBy(how = How.LINK_TEXT, using = "")
 	private WebElement link;
 
@@ -169,11 +169,12 @@ public class HomePage extends PageActionsUtil {
 		}
 	}
 
-	public void clickOnFeaturedProduct(String fprod) {
+	public void clickOnFeaturedProduct(String fprod) throws InterruptedException {
 		for (WebElement featured : featuredProductTitles) {
 			System.out.println(featured.getText());
 			if (featured.getText().equalsIgnoreCase(fprod)) {
-				clickByhref(featured);
+				Thread.sleep(2000);
+				featured.click();
 				break;
 			}
 		}
