@@ -11,9 +11,10 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import bksoft.OpenCartAutomation.base.PageBase;
 import bksoft.OpenCartAutomation.utils.PageActionsUtil;
 
-public class HomePage {
+public class HomePage extends PageBase {
 
 	WebDriver driver;
 	Actions action;
@@ -75,70 +76,65 @@ public class HomePage {
 	/*------------------------------Constructor----------------------------------*/
 
 	public HomePage(WebDriver driver) {
-		this.driver = driver;
+		super(driver);
+
 		PageFactory.initElements(driver, this);
 		action = new Actions(driver);
-		pageUtil = new PageActionsUtil(driver);
-	}
-
-	/*-----------------------Lazy initialization methods--------------------------*/
-	public void clickByhref(WebElement element) {
-		this.link = element;
 	}
 
 	/*-------------------------Generic actions methods-----------------------------*/
 
 	public void selectCurrency(String cr) {
-		currency.click();
+		flashAndclick(currency);
 		for (WebElement cur : currencyList) {
 			if (cur.getText().toLowerCase().contains(cr)) {
-				cur.click();
+				flashAndclick(cur);
 				break;
 			}
 		}
 	}
 
 	public void clickOnMyAccount() {
-		myAccount.click();
+		flashAndclick(myAccount);
 	}
 
 	public void clickOnRegister() {
-		register.click();
+		flashAndclick(register);
 	}
 
 	public void clickOnLogin() {
-		login.click();
+		flashAndclick(login);
 	}
 
 	public void clickOnWishList() {
-		wishList.click();
+		flashAndclick(wishList);
 	}
 
 	public void clickOnShoppingCart() {
-		shoppingCart.click();
+		flashAndclick(shoppingCart);
 	}
 
 	public void clickOnCheckout() {
-		checkout.click();
+		flashAndclick(checkout);
 	}
 
 	public void clickOnLogo() {
-		logo.click();
+		flashAndclick(logo);
 	}
 
 	public void searchItem(String query) {
 		searchBar.sendKeys(query);
-		searchBtn.click();
+		flashAndclick(searchBtn);
 	}
 
 	public void clickOnCartItems() {
-		items.click();
+		flashAndclick(items);
 	}
 
 	public void clickOnCategory(String cat) {
 		for (WebElement category : productCategories) {
 			if (category.getText().equalsIgnoreCase(cat)) {
-				category.click();
+				flashAndclick(category);
 				break;
 			}
 		}
@@ -160,22 +156,31 @@ public class HomePage {
 	public void clickOnSubCategory(String subCat) {
 		for (WebElement subElement : subCategories) {
 			if (subElement.getText().toLowerCase().contains(subCat)) {
-				subElement.click();
+				flashAndclick(subElement);
 				break;
 			}
 		}
 	}
 
-	public void clickOnFeaturedProductTitle(String fprod) throws InterruptedException {
+	public void clickOnFeaturedProductTitle(String fprod){
 		for (WebElement featured : featuredProductTitles) {
 			System.out.println(featured.getText());
 			if (featured.getText().toLowerCase().contains(fprod)) {
 
 				action.moveToElement(featured).build().perform();
-				pageUtil.flash(featured);
-				Thread.sleep(1000);
-				featured.click();
+				flashAndclick(featured);
+				break;
+			}
+		}
+	}
 
+	public void getFeaturedProductDescription(String fprod) {
+		for (WebElement featured : featuredProductTitles) {
+			//System.out.println(featured.getText());
+			if (featured.getText().toLowerCase().contains(fprod)) {
+				flash(featured.findElement(By.xpath("./following::p[1]")));
+				String des = featured.findElement(By.xpath("./following::p[1]")).getText();
+				System.out.println(des);
 				break;
 			}
 		}
