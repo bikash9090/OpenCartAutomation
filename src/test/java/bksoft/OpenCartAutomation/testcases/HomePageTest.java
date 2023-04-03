@@ -25,7 +25,7 @@ public class HomePageTest extends TestBase {
 		// hp.clickOnCategory("desktops");
 		// hp.hoverOverCategory("components");
 		// hp.clickOnSubCategory("printers");
-		hp.clickOnFeaturedProduct("MacBook");
+		hp.clickOnFeaturedProduct("Canon eos");
 
 		Thread.sleep(5000);
 	}
