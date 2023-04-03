@@ -13,10 +13,11 @@ import org.openqa.selenium.support.PageFactory;
 
 import bksoft.OpenCartAutomation.utils.PageActionsUtil;
 
-public class HomePage extends PageActionsUtil {
+public class HomePage {
 
 	WebDriver driver;
 	Actions action;
+	PageActionsUtil pageUtil;
 
 	/*------------------------------Locators-----------------------------------*/
 
@@ -77,6 +78,7 @@ public class HomePage extends PageActionsUtil {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Actions(driver);
+		pageUtil = new PageActionsUtil(driver);
 	}
 
 	/*-----------------------Lazy initialization methods--------------------------*/
@@ -164,12 +166,16 @@ public class HomePage extends PageActionsUtil {
 		}
 	}
 
-	public void clickOnFeaturedProduct(String fprod) throws InterruptedException {
+	public void clickOnFeaturedProductTitle(String fprod) throws InterruptedException {
 		for (WebElement featured : featuredProductTitles) {
 			System.out.println(featured.getText());
 			if (featured.getText().toLowerCase().contains(fprod)) {
-				Thread.sleep(2000);
+
+				action.moveToElement(featured).build().perform();
+				pageUtil.flash(featured);
+				Thread.sleep(1000);
 				featured.click();
+
 				break;
 			}
 		}
