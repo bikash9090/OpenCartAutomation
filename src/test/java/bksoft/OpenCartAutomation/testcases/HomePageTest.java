@@ -23,9 +23,15 @@ public class HomePageTest extends TestBase {
 		// hp.searchItem("iPhone 13");
 		// hp.clickOnCartItems();
 		// hp.clickOnCategory("desktops");
+<<<<<<< HEAD
 		// hp.hoverOverCategory("components");
 		// hp.clickOnSubCategory("printers");
 		hp.clickOnFeaturedProduct("apple");
+=======
+		 hp.hoverOverCategory("components");
+		 hp.clickOnSubCategory("printers");
+		//hp.clickOnFeaturedProduct("MacBook");
+>>>>>>> refs/remotes/origin/master
 
 		Thread.sleep(6000);
 	}
