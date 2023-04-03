@@ -172,7 +172,7 @@ public class HomePage extends PageActionsUtil {
 	public void clickOnFeaturedProduct(String fprod) throws InterruptedException {
 		for (WebElement featured : featuredProductTitles) {
 			System.out.println(featured.getText());
-			if (featured.getText().equalsIgnoreCase(fprod)) {
+			if (featured.getText().toLowerCase().contains(fprod)) {
 				Thread.sleep(2000);
 				featured.click();
 				break;
