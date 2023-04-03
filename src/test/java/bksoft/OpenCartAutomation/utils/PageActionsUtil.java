@@ -11,12 +11,17 @@ public class PageActionsUtil {
 		this.driver = driver;
 	}
 
-	public void flash(WebElement element) throws InterruptedException {
+	public void flash(WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor) driver; // downcasting
 
 		js.executeScript("arguments[0].setAttribute('style','background: yellow; border: solid 5px red')", element);
 
-		Thread.sleep(2000);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		js.executeScript("arguments[0].setAttribute('style','border: solid 2px white')", element);
 
