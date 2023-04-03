@@ -25,9 +25,9 @@ public class HomePageTest extends TestBase {
 		// hp.clickOnCategory("desktops");
 		// hp.hoverOverCategory("components");
 		// hp.clickOnSubCategory("printers");
-		hp.clickOnFeaturedProductTitle("canon eos");
+		// hp.clickOnFeaturedProductTitle("canon eos");
+		hp.getFeaturedProductDescription("canon eos");
 
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 	}
-
 }
