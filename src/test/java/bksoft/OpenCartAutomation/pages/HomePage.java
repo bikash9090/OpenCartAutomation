@@ -1,24 +1,21 @@
 package bksoft.OpenCartAutomation.pages;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 import bksoft.OpenCartAutomation.base.PageBase;
-import bksoft.OpenCartAutomation.utils.PageActionsUtil;
 
 public class HomePage extends PageBase {
 
 	WebDriver driver;
-	Actions action;
-	PageActionsUtil pageUtil;
 
 	/*------------------------------Locators-----------------------------------*/
 
@@ -79,18 +76,23 @@ public class HomePage extends PageBase {
 		super(driver);
 
 		PageFactory.initElements(driver, this);
-		action = new Actions(driver);
+
 	}
 
 	/*-------------------------Generic actions methods-----------------------------*/
 
 	public void selectCurrency(String cr) {
+		Boolean flag = false;
 		flashAndclick(currency);
 		for (WebElement cur : currencyList) {
 			if (cur.getText().toLowerCase().contains(cr)) {
 				flashAndclick(cur);
+				flag = true;
 				break;
 			}
+		}
+		if (!flag) {
+			throw new NoSuchElementException("Category : " + cr + " not found!");
 		}
 	}
 
@@ -132,58 +134,127 @@ public class HomePage extends PageBase {
 	}
 
 	public void clickOnCategory(String cat) {
+		Boolean flag = false;
 		for (WebElement category : productCategories) {
 			if (category.getText().equalsIgnoreCase(cat)) {
 				flashAndclick(category);
+				flag = true;
 				break;
 			}
 		}
+		if (!flag) {
+			throw new NoSuchElementException("Category : " + cat + " not found!");
+		}
+
 	}
 
 	public void hoverOverCategory(String cat) {
+		Boolean flag = false;
 		for (WebElement category : productCategories) {
 			System.out.println(category.getText());
 			if (category.getText().toLowerCase().contains(cat)) {
 
-				action.moveToElement(category).build().perform();
 				subCategories = category.findElement(By.xpath("./following-sibling::div[1]"))
 						.findElements(By.tagName("li"));
+				flag = true;
 				break;
 			}
+		}
+		if (!flag) {
+			throw new NoSuchElementException("Category : " + cat + " not found!");
 		}
 	}
 
 	public void clickOnSubCategory(String subCat) {
+		Boolean flag = false;
 		for (WebElement subElement : subCategories) {
 			if (subElement.getText().toLowerCase().contains(subCat)) {
 				flashAndclick(subElement);
 				break;
 			}
 		}
+		if (!flag) {
+			throw new NoSuchElementException("Subcategory : " + subCat + " not found!");
+		}
 	}
 
-	public void clickOnFeaturedProductTitle(String fprod){
+	public void clickOnFeaturedProductTitle(String fprod) {
+		Boolean flag = false;
 		for (WebElement featured : featuredProductTitles) {
 			System.out.println(featured.getText());
 			if (featured.getText().toLowerCase().contains(fprod)) {
 
-				action.moveToElement(featured).build().perform();
 				flashAndclick(featured);
+				flag = true;
 				break;
 			}
 		}
+		if (!flag) {
+			throw new NoSuchElementException("Product name : " + fprod + " not found!");
+		}
+	}
+	
+	public String getFeaturedProductProductTitle(String fprod) {
+		Boolean flag = false;
+		String fprodTitle = null;
+		for (WebElement featured : featuredProductTitles) {
+			System.out.println(featured.getText());
+			if (featured.getText().toLowerCase().contains(fprod)) {
+
+				fprodTitle = featured.getText();
+				flag = true;
+				break;
+			}
+		}
+		if (!flag) {
+			throw new NoSuchElementException("Product name : " + fprod + " not found!");
+		}
+		return fprodTitle;
 	}
 
-	public void getFeaturedProductDescription(String fprod) {
+	public String getFeaturedProductDescription(String fprod) {
+		String description = null;
+		Boolean flag = false;
 		for (WebElement featured : featuredProductTitles) {
-			//System.out.println(featured.getText());
+			scrolToElement(featured);
+			// System.out.println(featured.getText());
 			if (featured.getText().toLowerCase().contains(fprod)) {
 				flash(featured.findElement(By.xpath("./following::p[1]")));
 				String des = featured.findElement(By.xpath("./following::p[1]")).getText();
 				System.out.println(des);
+				flag = true;
 				break;
 			}
 		}
+		if (!flag) {
+			throw new NoSuchElementException("Product name : " + fprod + " not found!");
+		}
+		return description;
+	}
+
+	public String getFeaturedProductPrice(String fprod) {
+		String price = null;
+		Boolean flag = false;
+		for (WebElement featured : featuredProductTitles) {
+			scrolToElement(featured);
+			// System.out.println(featured.getText());
+			if (featured.getText().toLowerCase().contains(fprod)) {
+				flash(featured
+						.findElement(By.xpath("./following::div[@class='price']/child::span[@class=\"price-new\"]")));
+				price = featured
+						.findElement(By.xpath("./following::div[@class='price']/child::span[@class=\"price-new\"]"))
+						.getText();
+				System.out.println(price);
+				flag = true;
+				break;
+			}
+
+		}
+		if (!flag) {
+			throw new NoSuchElementException("Product name : " + fprod + " not found!");
+		}
+
+		return price;
 	}
 
 }
