@@ -12,7 +12,7 @@ public class HomePageTest extends TestBase {
 	public void validatingHomepageLocatorsFunctionality() throws InterruptedException {
 		hp = new HomePage(driver);
 
-		// hp.selectCurrency("dollar");
+		 hp.selectCurrency("pound");
 		// hp.clickOnMyAccount();
 		// hp.clickOnRegister();
 		// hp.clickOnLogin();
@@ -22,12 +22,15 @@ public class HomePageTest extends TestBase {
 		// hp.clickOnLogo();
 		// hp.searchItem("iPhone 13");
 		// hp.clickOnCartItems();
-		// hp.clickOnCategory("desktops");
+		// hp.clickOnCategory("4");
 		// hp.hoverOverCategory("components");
 		// hp.clickOnSubCategory("printers");
 		// hp.clickOnFeaturedProductTitle("canon eos");
-		hp.getFeaturedProductDescription("canon eos");
+		 hp.getFeaturedProductProductTitle("canon eos");
+		 hp.getFeaturedProductDescription("canon eos");
+		 hp.getFeaturedProductPrice("canon eos");
+		 
 
-		Thread.sleep(3000);
+		//Thread.sleep(3000);
 	}
 }
