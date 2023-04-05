@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
-import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 import bksoft.OpenCartAutomation.base.PageBase;
@@ -67,8 +66,12 @@ public class HomePage extends PageBase {
 			@FindBy(xpath = "./descendant::div[@class=\"description\"]"), @FindBy(xpath = "./child::h4/a") })
 	private List<WebElement> featuredProductTitles;
 
-	@FindBy(how = How.LINK_TEXT, using = "")
-	private WebElement link;
+	@FindBys({ @FindBy(tagName = "footer"), @FindBy(xpath = "./descendant::div[@class=\"col-sm-3\"]/h5")
+
+	})
+	private List<WebElement> hyperLinkHeadings;
+
+	private List<WebElement> hyperLinks;
 
 	/*------------------------------Constructor----------------------------------*/
 
@@ -193,7 +196,7 @@ public class HomePage extends PageBase {
 			throw new NoSuchElementException("Product name : " + fprod + " not found!");
 		}
 	}
-	
+
 	public String getFeaturedProductProductTitle(String fprod) {
 		Boolean flag = false;
 		String fprodTitle = null;
@@ -255,6 +258,99 @@ public class HomePage extends PageBase {
 		}
 
 		return price;
+	}
+
+	public void clickOnFeaturedProductAddToCart(String fprod) {
+		Boolean flag = false;
+		for (WebElement featured : featuredProductTitles) {
+			scrolToElement(featured);
+			// System.out.println(featured.getText());
+			if (featured.getText().toLowerCase().contains(fprod)) {
+
+				flashAndclick(featured.findElement(By.xpath(
+						"./following::div[@class=\"button-group\"]/child::button[@aria-label=\"Add to Cart\"]")));
+				flag = true;
+				break;
+			}
+
+		}
+		if (!flag) {
+			throw new NoSuchElementException("Product name : " + fprod + " not found!");
+		}
+	}
+
+	public void clickOnFeaturedProductAddToWishList(String fprod) {
+		Boolean flag = false;
+		for (WebElement featured : featuredProductTitles) {
+			scrolToElement(featured);
+			// System.out.println(featured.getText());
+			if (featured.getText().toLowerCase().contains(fprod)) {
+
+				flashAndclick(featured.findElement(By.xpath(
+						"./following::div[@class=\"button-group\"]/child::button[@aria-label=\"Add to Wish List\"]")));
+				flag = true;
+				break;
+			}
+
+		}
+		if (!flag) {
+			throw new NoSuchElementException("Product name : " + fprod + " not found!");
+		}
+	}
+
+	public void clickOnFeaturedProductCompareThisProduct(String fprod) {
+		Boolean flag = false;
+		for (WebElement featured : featuredProductTitles) {
+			scrolToElement(featured);
+			// System.out.println(featured.getText());
+			if (featured.getText().toLowerCase().contains(fprod)) {
+
+				flashAndclick(featured.findElement(By.xpath(
+						"./following::div[@class=\"button-group\"]/child::button[@aria-label=\"Compare this Product\"]")));
+				flag = true;
+				break;
+			}
+
+		}
+		if (!flag) {
+			throw new NoSuchElementException("Product name : " + fprod + " not found!");
+		}
+	}
+
+	public void getHyperLinks(String heading) {
+		Boolean flag = false;
+		for (WebElement hyperHeading : hyperLinkHeadings) {
+			scrolToElement(hyperHeading);
+			if (hyperHeading.getText().toLowerCase().contains(heading)) {
+				flash(hyperHeading);
+				hyperLinks = hyperHeading.findElement(By.xpath("./following-sibling::ul"))
+						.findElements(By.tagName("a"));
+				System.out.println(hyperHeading.getText());
+				flag = true;
+				break;
+			}
+
+		}
+		if (!flag) {
+			throw new NoSuchElementException("Hyperlink heading : " + heading + " not found!");
+		}
+	}
+
+	public void clickOnHyperLink(String heading, String hyperLink) {
+		Boolean flag = false;
+		getHyperLinks(heading);
+		for (WebElement link : hyperLinks) {
+			System.out.println(link.getText());
+			if (link.getText().toLowerCase().contains(hyperLink)) {
+				flashAndclick(link);
+				flag = true;
+				break;
+			}
+
+		}
+		if (!flag) {
+			throw new NoSuchElementException("Hyperlink : " + heading + " not found!");
+		}
 	}
 
 }
