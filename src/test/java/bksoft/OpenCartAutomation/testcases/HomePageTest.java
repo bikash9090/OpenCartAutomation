@@ -26,11 +26,15 @@ public class HomePageTest extends TestBase {
 		// hp.hoverOverCategory("components");
 		// hp.clickOnSubCategory("printers");
 		// hp.clickOnFeaturedProductTitle("canon eos");
-		 hp.getFeaturedProductProductTitle("canon eos");
-		 hp.getFeaturedProductDescription("canon eos");
-		 hp.getFeaturedProductPrice("canon eos");
+		// hp.getFeaturedProductProductTitle("canon eos");
+		// hp.getFeaturedProductDescription("canon eos");
+		// hp.getFeaturedProductPrice("canon eos");
+		// hp.clickOnFeaturedProductAddToCart("iphone");
+		// hp.clickOnFeaturedProductAddToWishList("iphone");
+		// hp.clickOnFeaturedProductCompareThisProduct("macbook");
+		 hp.clickOnHyperLink("extras","brands");
 		 
 
-		//Thread.sleep(3000);
+		Thread.sleep(3000);
 	}
 }
