@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class PropertiesUtil {
 
-	String path =  System.getProperty("user.dir")+"\\resources\\config.properties";
+	String path =  System.getProperty("user.dir")+"\\src\\test\\resources\\config.properties";
 	Properties prop;
 
 	public PropertiesUtil() {
