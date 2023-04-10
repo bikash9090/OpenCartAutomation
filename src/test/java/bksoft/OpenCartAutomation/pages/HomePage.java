@@ -3,6 +3,8 @@ package bksoft.OpenCartAutomation.pages;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +15,8 @@ import org.openqa.selenium.support.PageFactory;
 import bksoft.OpenCartAutomation.base.PageBase;
 
 public class HomePage extends PageBase {
+
+	Logger log = LogManager.getLogger(HomePage.class.getName());
 
 	WebDriver driver;
 
@@ -79,6 +83,7 @@ public class HomePage extends PageBase {
 		super(driver);
 
 		PageFactory.initElements(driver, this);
+		log.info("HomePage object created.");
 
 	}
 
