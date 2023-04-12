@@ -61,7 +61,7 @@ public class HomePage extends PageBase {
 	@FindBy(xpath = "//*[@id=\"header-cart\"]/div/button")
 	private WebElement items;
 
-	@FindBys({ @FindBy(xpath = "//*[@id=\"narbar-menu\"]/ul"), @FindBy(xpath = "./li/*[1]") })
+	@FindBys({ @FindBy(xpath = "//*[@id=\"narbar-menu\"]/ul"), @FindBy(xpath = "./li/a") })
 	private List<WebElement> productCategories;
 
 	private List<WebElement> subCategories;
@@ -83,66 +83,81 @@ public class HomePage extends PageBase {
 		super(driver);
 
 		PageFactory.initElements(driver, this);
-		log.info("HomePage object created.");
-
 	}
 
 	/*-------------------------Generic actions methods-----------------------------*/
 
 	public void selectCurrency(String cr) {
 		Boolean flag = false;
+		log.info("Selecting currency");
 		flashAndclick(currency);
+		
 		for (WebElement cur : currencyList) {
 			if (cur.getText().toLowerCase().contains(cr)) {
+				
 				flashAndclick(cur);
 				flag = true;
 				break;
 			}
 		}
 		if (!flag) {
+			log.error("Currency entered not found!");
 			throw new NoSuchElementException("Category : " + cr + " not found!");
 		}
 	}
 
 	public void clickOnMyAccount() {
+		log.info("clicking on My Account.");
 		flashAndclick(myAccount);
 	}
 
 	public void clickOnRegister() {
+		log.info("Clicking on register.");
 		flashAndclick(register);
 	}
 
 	public void clickOnLogin() {
+		log.info("Clicking on login.");
 		flashAndclick(login);
 	}
 
 	public void clickOnWishList() {
+		log.info("Clicking on Wish List.");
 		flashAndclick(wishList);
 	}
 
 	public void clickOnShoppingCart() {
+		log.info("Clicking on Shopping Cart.");
 		flashAndclick(shoppingCart);
 	}
 
 	public void clickOnCheckout() {
+		log.info("Clicking on Checkout.");
 		flashAndclick(checkout);
 	}
 
 	public void clickOnLogo() {
+		log.info("Clicking on logo.");
 		flashAndclick(logo);
 	}
 
 	public void searchItem(String query) {
+		log.info("Entering query to search bar.");
 		searchBar.sendKeys(query);
+		
 		flashAndclick(searchBtn);
+		log.info("Flashed and clicked on search button.");
 	}
 
 	public void clickOnCartItems() {
 		flashAndclick(items);
+		log.info("Flash and clicked on cart item : "+items);
 	}
 
 	public void clickOnCategory(String cat) {
 		Boolean flag = false;
+		log.info("Clicking on product category : "+cat);
+		
 		for (WebElement category : productCategories) {
 			if (category.getText().equalsIgnoreCase(cat)) {
 				flashAndclick(category);
@@ -151,6 +166,7 @@ public class HomePage extends PageBase {
 			}
 		}
 		if (!flag) {
+			log.error("Category entered not found!");
 			throw new NoSuchElementException("Category : " + cat + " not found!");
 		}
 
@@ -158,36 +174,45 @@ public class HomePage extends PageBase {
 
 	public void hoverOverCategory(String cat) {
 		Boolean flag = false;
+		log.info("Hovering on category : "+cat);
+		
 		for (WebElement category : productCategories) {
-			System.out.println(category.getText());
 			if (category.getText().toLowerCase().contains(cat)) {
 
-				subCategories = category.findElement(By.xpath("./following-sibling::div[1]"))
+				subCategories = category.findElement(By.xpath("./following::ul[1]"))
 						.findElements(By.tagName("li"));
+				moveToElement(category);
 				flag = true;
 				break;
 			}
 		}
 		if (!flag) {
+			log.error("Category not found!");
 			throw new NoSuchElementException("Category : " + cat + " not found!");
 		}
 	}
 
 	public void clickOnSubCategory(String subCat) {
 		Boolean flag = false;
+		log.info("Clicking on sub category : "+subCat);
+		
 		for (WebElement subElement : subCategories) {
 			if (subElement.getText().toLowerCase().contains(subCat)) {
 				flashAndclick(subElement);
+				flag = true;
 				break;
 			}
 		}
 		if (!flag) {
+			log.error("SubCategory not found!");
 			throw new NoSuchElementException("Subcategory : " + subCat + " not found!");
 		}
 	}
 
 	public void clickOnFeaturedProductTitle(String fprod) {
 		Boolean flag = false;
+		log.info("Clicking on featured product.");
+		
 		for (WebElement featured : featuredProductTitles) {
 			System.out.println(featured.getText());
 			if (featured.getText().toLowerCase().contains(fprod)) {
@@ -198,6 +223,7 @@ public class HomePage extends PageBase {
 			}
 		}
 		if (!flag) {
+			log.error("Featured product not found!");
 			throw new NoSuchElementException("Product name : " + fprod + " not found!");
 		}
 	}
@@ -205,6 +231,8 @@ public class HomePage extends PageBase {
 	public String getFeaturedProductProductTitle(String fprod) {
 		Boolean flag = false;
 		String fprodTitle = null;
+		log.info("Getting titles of featured product : "+fprod);
+		
 		for (WebElement featured : featuredProductTitles) {
 			System.out.println(featured.getText());
 			if (featured.getText().toLowerCase().contains(fprod)) {
@@ -215,6 +243,7 @@ public class HomePage extends PageBase {
 			}
 		}
 		if (!flag) {
+			log.error("Featured product not found!");
 			throw new NoSuchElementException("Product name : " + fprod + " not found!");
 		}
 		return fprodTitle;
@@ -223,6 +252,8 @@ public class HomePage extends PageBase {
 	public String getFeaturedProductDescription(String fprod) {
 		String description = null;
 		Boolean flag = false;
+		log.info("Getting description of featured product : "+fprod);
+		
 		for (WebElement featured : featuredProductTitles) {
 			scrolToElement(featured);
 			// System.out.println(featured.getText());
@@ -235,6 +266,7 @@ public class HomePage extends PageBase {
 			}
 		}
 		if (!flag) {
+			log.error("Featured product not found!");
 			throw new NoSuchElementException("Product name : " + fprod + " not found!");
 		}
 		return description;
@@ -243,6 +275,8 @@ public class HomePage extends PageBase {
 	public String getFeaturedProductPrice(String fprod) {
 		String price = null;
 		Boolean flag = false;
+		log.info("Getting the price of featured prouduct : "+fprod);
+		
 		for (WebElement featured : featuredProductTitles) {
 			scrolToElement(featured);
 			// System.out.println(featured.getText());
@@ -259,6 +293,7 @@ public class HomePage extends PageBase {
 
 		}
 		if (!flag) {
+			log.error("Featured product not found!");
 			throw new NoSuchElementException("Product name : " + fprod + " not found!");
 		}
 
@@ -267,6 +302,8 @@ public class HomePage extends PageBase {
 
 	public void clickOnFeaturedProductAddToCart(String fprod) {
 		Boolean flag = false;
+		log.info("Clikcing on featured product add to cart.");
+		
 		for (WebElement featured : featuredProductTitles) {
 			scrolToElement(featured);
 			// System.out.println(featured.getText());
@@ -280,12 +317,15 @@ public class HomePage extends PageBase {
 
 		}
 		if (!flag) {
+			log.error("Featured product not found!");
 			throw new NoSuchElementException("Product name : " + fprod + " not found!");
 		}
 	}
 
 	public void clickOnFeaturedProductAddToWishList(String fprod) {
 		Boolean flag = false;
+		log.info("Clicking on featured product add to wish list.");
+		
 		for (WebElement featured : featuredProductTitles) {
 			scrolToElement(featured);
 			// System.out.println(featured.getText());
@@ -299,12 +339,15 @@ public class HomePage extends PageBase {
 
 		}
 		if (!flag) {
+			log.error("Featured product not found!");
 			throw new NoSuchElementException("Product name : " + fprod + " not found!");
 		}
 	}
 
 	public void clickOnFeaturedProductCompareThisProduct(String fprod) {
 		Boolean flag = false;
+		log.info("Click on Featured product compare this product.");
+		
 		for (WebElement featured : featuredProductTitles) {
 			scrolToElement(featured);
 			// System.out.println(featured.getText());
@@ -318,12 +361,15 @@ public class HomePage extends PageBase {
 
 		}
 		if (!flag) {
+			log.error("Featured product not found!");
 			throw new NoSuchElementException("Product name : " + fprod + " not found!");
 		}
 	}
 
 	public void getHyperLinks(String heading) {
 		Boolean flag = false;
+		log.info("Getting the hyperlinks.");
+		
 		for (WebElement hyperHeading : hyperLinkHeadings) {
 			scrolToElement(hyperHeading);
 			if (hyperHeading.getText().toLowerCase().contains(heading)) {
@@ -337,13 +383,17 @@ public class HomePage extends PageBase {
 
 		}
 		if (!flag) {
+			log.error("Hyperlink heading not found!");
 			throw new NoSuchElementException("Hyperlink heading : " + heading + " not found!");
 		}
 	}
 
 	public void clickOnHyperLink(String heading, String hyperLink) {
 		Boolean flag = false;
+		
 		getHyperLinks(heading);
+		log.info("Clicking on hyperlink.");
+		
 		for (WebElement link : hyperLinks) {
 			System.out.println(link.getText());
 			if (link.getText().toLowerCase().contains(hyperLink)) {
@@ -354,6 +404,7 @@ public class HomePage extends PageBase {
 
 		}
 		if (!flag) {
+			log.error("Hyperlink heading not found!");
 			throw new NoSuchElementException("Hyperlink : " + heading + " not found!");
 		}
 	}
