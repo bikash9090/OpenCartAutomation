@@ -1,6 +1,6 @@
 package bksoft.OpenCartAutomation.testcases;
 
-import org.testng.AssertJUnit;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -13,20 +13,21 @@ public class HomePageTest extends TestBase {
 	HomePage hp;
 
 	@BeforeMethod
-	public void beforClassSetUp() {
+	public void initialization() {
 		setUpDriver();
 		hp = new HomePage(driver);
 	}
 
 	@AfterMethod
-	public void afterClassTearDown() {
+	public void tearDown() {
 		tearDownDriver();
 	}
 
+	// All currencies on HomePage.
 	@DataProvider(name = "currencyData")
-	private Object[][] getCurrencyData() {
+	private String[][] getCurrencyData() {
 		// Currencies
-		return new Object[][] { { "euro" }, { "pound" }, { "dollar" } };
+		return new String[][] { { "euro" }, { "pound" }, { "dollar" } };
 	}
 
 	private String getCurrencySymbol(String currency) {
@@ -44,20 +45,35 @@ public class HomePageTest extends TestBase {
 	}
 
 	@Test(dataProvider = "currencyData")
-	public void testSelectCurrency(String currency) {
+	public void selectCurrencyTest(String currency) {
 		String product = "iphone";
 
 		hp.selectCurrency(currency);
 		String price = hp.getFeaturedProductPrice(product);
 
 		if (price.contains(getCurrencySymbol(currency))) {
-			AssertJUnit.assertTrue("Price does not contain currency symbol", true);
+			Assert.assertTrue(true, "Price does not contain currency symbol");
 		} else {
-			AssertJUnit.assertFalse("Price contains currency symbol", false);
+			Assert.assertFalse(false, "Price contains currency symbol");
 		}
 	}
 
-	@Test()
+	// All category name on HomePage.
+	@DataProvider(name = "categories")
+	public String[][] categoryData() {
+		return new String[][] { { "Tablets" }, { "Software" }, { "Phones & PDAs" }, { "Cameras" } };
+	}
+
+	@Test(dataProvider = "categories")
+	public void verifyCategoryPages(String cat) throws InterruptedException {
+
+		hp.clickOnCategory(cat);
+		Thread.sleep(1000);
+		driver.navigate().back();
+
+	}
+
+	@Test(enabled = false)
 	public void validatingHomepageLocatorsFunctionality() throws InterruptedException {
 
 		hp.selectCurrency("dollar");
