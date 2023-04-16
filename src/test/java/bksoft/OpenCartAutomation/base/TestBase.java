@@ -6,8 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 
 import bksoft.OpenCartAutomation.utils.PropertiesUtil;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -16,10 +14,9 @@ public class TestBase {
 
 	PropertiesUtil readconfig = new PropertiesUtil();
 	public WebDriver driver;
-
-	@BeforeMethod
-	public void setUp() {
-
+	
+	public void setUpDriver() {
+		
 		WebDriverManager.chromedriver().setup();
 
 		if (readconfig.getBrowser().equalsIgnoreCase("chrome")) {
@@ -36,9 +33,8 @@ public class TestBase {
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
 	}
-
-	@AfterMethod
-	public void tearDown() {
+	
+	public void tearDownDriver() {
 		driver.quit();
 	}
 }
