@@ -14,13 +14,15 @@ public class PageBase {
 	protected WebDriver driver;
 	PageActionsUtil pageUtil;
 	Actions action;
-	
+	JavascriptExecutor jsx;
+
 	Logger log = LogManager.getLogger(PageBase.class.getName());
 
 	public PageBase(WebDriver driver) {
 		this.driver = driver;
 		pageUtil = new PageActionsUtil(driver);
 		action = new Actions(driver);
+		jsx = (JavascriptExecutor) driver;
 	}
 
 	public void click(WebElement element) {
@@ -60,6 +62,22 @@ public class PageBase {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView();", element);
 		log.debug("Scrolled to given element.");
+
+	}
+
+	public void waitForPageLoad(int timeOut) {
+
+		long endTime = System.currentTimeMillis() + timeOut;
+
+		while (System.currentTimeMillis() < endTime) {
+
+			String pageState = jsx.executeScript("return document.readyState").toString();
+			if (pageState.equals("complete")) {
+				System.out.println("page DOM is fully loaded now.....");
+				break;
+			}
+
+		}
 
 	}
 }
