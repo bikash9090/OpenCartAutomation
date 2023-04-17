@@ -46,16 +46,12 @@ public class HomePageTest extends TestBase {
 
 	@Test(dataProvider = "currencyData")
 	public void selectCurrencyTest(String currency) {
-		String product = "iphone";
+		String product = "macbook";
 
 		hp.selectCurrency(currency);
 		String price = hp.getFeaturedProductPrice(product);
 
-		if (price.contains(getCurrencySymbol(currency))) {
-			Assert.assertTrue(true, "Price does not contain currency symbol");
-		} else {
-			Assert.assertFalse(false, "Price contains currency symbol");
-		}
+		Assert.assertTrue(price.contains(getCurrencySymbol(currency)));
 	}
 
 	// All category name on HomePage.
@@ -68,7 +64,7 @@ public class HomePageTest extends TestBase {
 	public void verifyCategoryPages(String cat) throws InterruptedException {
 
 		hp.clickOnCategory(cat);
-		Thread.sleep(1000);
+		hp.waitForPageLoad(1000);
 		driver.navigate().back();
 
 	}

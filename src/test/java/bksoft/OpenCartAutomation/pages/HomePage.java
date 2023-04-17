@@ -89,13 +89,15 @@ public class HomePage extends PageBase {
 
 	public void selectCurrency(String cr) {
 		Boolean flag = false;
-		log.info("Selecting currency");
+
 		flashAndclick(currency);
+		log.info("Flashed and clicked on currency list.");
 		
 		for (WebElement cur : currencyList) {
 			if (cur.getText().toLowerCase().contains(cr)) {
 				
 				flashAndclick(cur);
+				log.info("Flashed and clicked on currency : "+cr);
 				flag = true;
 				break;
 			}
