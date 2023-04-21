@@ -27,11 +27,12 @@ public class PageBase {
 
 	public void click(WebElement element) {
 		element.click();
+		log.debug("Clicked successful...");
 	}
 
 	public void flashAndclick(WebElement element) {
 		flash(element);
-		element.click();
+		click(element);
 	}
 
 	public void flash(WebElement element) {
@@ -46,6 +47,8 @@ public class PageBase {
 		}
 
 		js.executeScript("arguments[0].setAttribute('style','border: solid 2px white')", element);
+		
+		log.debug("Flashed successful...");
 	}
 
 	public void moveToElement(WebElement element) {
@@ -71,8 +74,14 @@ public class PageBase {
 				System.out.println("page DOM is fully loaded now.....");
 				break;
 			}
-
 		}
-
+	}
+	
+	public void navigateForward() {
+		
+	}
+	
+	public void navigateBack() {
+		driver.navigate().back();
 	}
 }
