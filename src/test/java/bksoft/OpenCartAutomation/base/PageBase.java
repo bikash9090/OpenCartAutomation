@@ -19,8 +19,7 @@ public class PageBase {
 	Logger log = LogManager.getLogger(PageBase.class.getName());
 
 	public PageBase(WebDriver driver) {
-		this.driver = driver;
-		pageUtil = new PageActionsUtil(driver);
+		this.driver = driver;		
 		action = new Actions(driver);
 		jsx = (JavascriptExecutor) driver;
 	}

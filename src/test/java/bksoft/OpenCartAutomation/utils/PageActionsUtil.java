@@ -1,14 +1,14 @@
 package bksoft.OpenCartAutomation.utils;
 
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class PageActionsUtil {
 
-	WebDriver driver;
-
-	public PageActionsUtil(WebDriver driver) {
-		this.driver = driver;
+	public void click(WebElement element) {
+		element.click();
 	}
 
-	
+	public void moveToElement() {
+
+	}
 }
