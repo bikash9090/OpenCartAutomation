@@ -1,8 +1,8 @@
 package bksoft.OpenCartAutomation.testcases;
 
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -12,13 +12,13 @@ import bksoft.OpenCartAutomation.pages.HomePage;
 public class HomePageTest extends TestBase {
 	HomePage hp;
 
-	@BeforeMethod
+	@BeforeClass
 	public void initialization() {
 		setUpDriver();
 		hp = new HomePage(driver);
 	}
 
-	@AfterMethod
+	@AfterClass
 	public void tearDown() {
 		tearDownDriver();
 	}
@@ -46,37 +46,57 @@ public class HomePageTest extends TestBase {
 
 	@Test(dataProvider = "currencyData")
 	public void selectCurrencyTest(String currency) {
-		String product = "iphone";
+		String product = "macbook";
 
 		hp.selectCurrency(currency);
 		String price = hp.getFeaturedProductPrice(product);
+		System.out.println(currency);
 
-		if (price.contains(getCurrencySymbol(currency))) {
-			Assert.assertTrue(true, "Price does not contain currency symbol");
-		} else {
-			Assert.assertFalse(false, "Price contains currency symbol");
-		}
+		Assert.assertTrue(price.contains(getCurrencySymbol(currency)));
 	}
 
 	// All category name on HomePage.
-	@DataProvider(name = "categories")
+	@DataProvider(name = "categoriesData")
 	public String[][] categoryData() {
 		return new String[][] { { "Tablets" }, { "Software" }, { "Phones & PDAs" }, { "Cameras" } };
 	}
 
-	@Test(dataProvider = "categories")
+	@Test(dataProvider = "categoriesData")
 	public void verifyCategoryPages(String cat) throws InterruptedException {
 
 		hp.clickOnCategory(cat);
-		Thread.sleep(1000);
+		hp.waitForPageLoad(1000);
 		driver.navigate().back();
 
 	}
 
-	@Test(enabled = false)
+	@DataProvider(name = "hoverCategory")
+	public String[][] hoverCategory() {
+		return new String[][] { { "Desktops", "PC" }, { "Desktops", "Mac" }, { "Laptops & Notebooks", "Macs" },
+				{ "Laptops & Notebooks", "Windows" }, { "Components", "Mice and Trackballs" },
+				{ "Components", "Monitors" }, { "Components", "Printers" }, { "Components", "Scanners" },
+				{ "Components", "Web Cameras" }, { "MP3 Players", "test 11" }, { "MP3 Players", "test 12" },
+				{ "MP3 Players", "test 15" }, { "MP3 Players", "test 16" }, { "MP3 Players", "test 17" },
+				{ "MP3 Players", "test 18" }, { "MP3 Players", "test 19" }, { "MP3 Players", "test 20" },
+				{ "MP3 Players", "test 21" }, { "MP3 Players", "test 22" }, { "MP3 Players", "test 23" },
+				{ "MP3 Players", "test 24" }, { "MP3 Players", "test 4" }, { "MP3 Players", "test 5" },
+				{ "MP3 Players", "test 6" }, { "MP3 Players", "test 7" }, { "MP3 Players", "test 8" },
+				{ "MP3 Players", "test 9" }, };
+	}
+
+	@Test(dataProvider = "hoverCategory")
+	public void verifySubCategoryPages(String category, String subcategory) {
+		hp.hoverOverCategory(category);
+		hp.clickOnSubCategory(subcategory);
+		//hp.navigateBack();
+	}
+
+	// { "MP3 Players" },
+
+	@Test()
 	public void validatingHomepageLocatorsFunctionality() throws InterruptedException {
 
-		hp.selectCurrency("dollar");
+		// hp.selectCurrency("dollar");
 		// hp.clickOnMyAccount();
 		// hp.clickOnRegister();
 		// hp.clickOnLogin();
@@ -87,8 +107,8 @@ public class HomePageTest extends TestBase {
 		// hp.searchItem("iPhone 13");
 		// hp.clickOnCartItems();
 		// hp.clickOnCategory("4");
-		hp.hoverOverCategory("components");
-		hp.clickOnSubCategory("printers");
+		hp.hoverOverCategory("Desktops");
+		// hp.clickOnSubCategory("printers");
 		// hp.clickOnFeaturedProductTitle("canon eos");
 		// hp.getFeaturedProductProductTitle("canon eos");
 		// hp.getFeaturedProductDescription("canon eos");

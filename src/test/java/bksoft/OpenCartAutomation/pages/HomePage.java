@@ -61,13 +61,13 @@ public class HomePage extends PageBase {
 	@FindBy(xpath = "//*[@id=\"header-cart\"]/div/button")
 	private WebElement items;
 
-	@FindBys({ @FindBy(xpath = "//*[@id=\"narbar-menu\"]/ul"), @FindBy(xpath = "./li/a") })
+	@FindBy(xpath = "//*[@id=\"narbar-menu\"]/ul/li/a")
 	private List<WebElement> productCategories;
-
+	
+	
 	private List<WebElement> subCategories;
 
-	@FindBys({ @FindBy(xpath = "//*[@id=\"content\"]/div[2]"),
-			@FindBy(xpath = "./descendant::div[@class=\"description\"]"), @FindBy(xpath = "./child::h4/a") })
+	@FindBy(xpath = "//*[@id=\"content\"]/div[2]/descendant::div[@class=\"description\"]/child::h4/a")
 	private List<WebElement> featuredProductTitles;
 
 	@FindBys({ @FindBy(tagName = "footer"), @FindBy(xpath = "./descendant::div[@class=\"col-sm-3\"]/h5")
@@ -89,13 +89,15 @@ public class HomePage extends PageBase {
 
 	public void selectCurrency(String cr) {
 		Boolean flag = false;
-		log.info("Selecting currency");
+
 		flashAndclick(currency);
-		
+		log.info("Flashed and clicked on currency list.");
+
 		for (WebElement cur : currencyList) {
 			if (cur.getText().toLowerCase().contains(cr)) {
-				
+
 				flashAndclick(cur);
+				log.info("Flashed and clicked on currency : " + cr);
 				flag = true;
 				break;
 			}
@@ -144,20 +146,20 @@ public class HomePage extends PageBase {
 	public void searchItem(String query) {
 		log.info("Entering query to search bar.");
 		searchBar.sendKeys(query);
-		
+
 		flashAndclick(searchBtn);
 		log.info("Flashed and clicked on search button.");
 	}
 
 	public void clickOnCartItems() {
 		flashAndclick(items);
-		log.info("Flash and clicked on cart item : "+items);
+		log.info("Flash and clicked on cart item : " + items);
 	}
 
 	public void clickOnCategory(String cat) {
 		Boolean flag = false;
-		log.info("Clicking on product category : "+cat);
-		
+		log.info("Clicking on product category : " + cat);
+
 		for (WebElement category : productCategories) {
 			if (category.getText().equalsIgnoreCase(cat)) {
 				flashAndclick(category);
@@ -174,13 +176,12 @@ public class HomePage extends PageBase {
 
 	public void hoverOverCategory(String cat) {
 		Boolean flag = false;
-		log.info("Hovering on category : "+cat);
-		
-		for (WebElement category : productCategories) {
-			if (category.getText().toLowerCase().contains(cat)) {
+		log.info("Hovering on category : " + cat);
 
-				subCategories = category.findElement(By.xpath("./following::ul[1]"))
-						.findElements(By.tagName("li"));
+		for (WebElement category : productCategories) {
+			if (category.getText().contains(cat)) {
+
+				subCategories = category.findElement(By.xpath("./following::div[1]")).findElements(By.tagName("li"));
 				moveToElement(category);
 				flag = true;
 				break;
@@ -194,10 +195,11 @@ public class HomePage extends PageBase {
 
 	public void clickOnSubCategory(String subCat) {
 		Boolean flag = false;
-		log.info("Clicking on sub category : "+subCat);
-		
+		log.info("Clicking on sub category : " + subCat);
+
 		for (WebElement subElement : subCategories) {
-			if (subElement.getText().toLowerCase().contains(subCat)) {
+			System.out.println(subElement.getText());
+			if (subElement.getText().contains(subCat)) {
 				flashAndclick(subElement);
 				flag = true;
 				break;
@@ -212,7 +214,7 @@ public class HomePage extends PageBase {
 	public void clickOnFeaturedProductTitle(String fprod) {
 		Boolean flag = false;
 		log.info("Clicking on featured product.");
-		
+
 		for (WebElement featured : featuredProductTitles) {
 			System.out.println(featured.getText());
 			if (featured.getText().toLowerCase().contains(fprod)) {
@@ -231,8 +233,8 @@ public class HomePage extends PageBase {
 	public String getFeaturedProductProductTitle(String fprod) {
 		Boolean flag = false;
 		String fprodTitle = null;
-		log.info("Getting titles of featured product : "+fprod);
-		
+		log.info("Getting titles of featured product : " + fprod);
+
 		for (WebElement featured : featuredProductTitles) {
 			System.out.println(featured.getText());
 			if (featured.getText().toLowerCase().contains(fprod)) {
@@ -252,8 +254,8 @@ public class HomePage extends PageBase {
 	public String getFeaturedProductDescription(String fprod) {
 		String description = null;
 		Boolean flag = false;
-		log.info("Getting description of featured product : "+fprod);
-		
+		log.info("Getting description of featured product : " + fprod);
+
 		for (WebElement featured : featuredProductTitles) {
 			scrolToElement(featured);
 			// System.out.println(featured.getText());
@@ -275,8 +277,8 @@ public class HomePage extends PageBase {
 	public String getFeaturedProductPrice(String fprod) {
 		String price = null;
 		Boolean flag = false;
-		log.info("Getting the price of featured prouduct : "+fprod);
-		
+		log.info("Getting the price of featured prouduct : " + fprod);
+
 		for (WebElement featured : featuredProductTitles) {
 			scrolToElement(featured);
 			// System.out.println(featured.getText());
@@ -303,7 +305,7 @@ public class HomePage extends PageBase {
 	public void clickOnFeaturedProductAddToCart(String fprod) {
 		Boolean flag = false;
 		log.info("Clikcing on featured product add to cart.");
-		
+
 		for (WebElement featured : featuredProductTitles) {
 			scrolToElement(featured);
 			// System.out.println(featured.getText());
@@ -325,7 +327,7 @@ public class HomePage extends PageBase {
 	public void clickOnFeaturedProductAddToWishList(String fprod) {
 		Boolean flag = false;
 		log.info("Clicking on featured product add to wish list.");
-		
+
 		for (WebElement featured : featuredProductTitles) {
 			scrolToElement(featured);
 			// System.out.println(featured.getText());
@@ -347,7 +349,7 @@ public class HomePage extends PageBase {
 	public void clickOnFeaturedProductCompareThisProduct(String fprod) {
 		Boolean flag = false;
 		log.info("Click on Featured product compare this product.");
-		
+
 		for (WebElement featured : featuredProductTitles) {
 			scrolToElement(featured);
 			// System.out.println(featured.getText());
@@ -369,7 +371,7 @@ public class HomePage extends PageBase {
 	public void getHyperLinks(String heading) {
 		Boolean flag = false;
 		log.info("Getting the hyperlinks.");
-		
+
 		for (WebElement hyperHeading : hyperLinkHeadings) {
 			scrolToElement(hyperHeading);
 			if (hyperHeading.getText().toLowerCase().contains(heading)) {
@@ -390,10 +392,10 @@ public class HomePage extends PageBase {
 
 	public void clickOnHyperLink(String heading, String hyperLink) {
 		Boolean flag = false;
-		
+
 		getHyperLinks(heading);
 		log.info("Clicking on hyperlink.");
-		
+
 		for (WebElement link : hyperLinks) {
 			System.out.println(link.getText());
 			if (link.getText().toLowerCase().contains(hyperLink)) {

@@ -14,23 +14,24 @@ public class PageBase {
 	protected WebDriver driver;
 	PageActionsUtil pageUtil;
 	Actions action;
-	
+	JavascriptExecutor jsx;
+
 	Logger log = LogManager.getLogger(PageBase.class.getName());
 
 	public PageBase(WebDriver driver) {
 		this.driver = driver;		
 		action = new Actions(driver);
+		jsx = (JavascriptExecutor) driver;
 	}
 
 	public void click(WebElement element) {
 		element.click();
-		log.debug("Performed click action.");
+		log.debug("Clicked successful...");
 	}
 
 	public void flashAndclick(WebElement element) {
 		flash(element);
-		element.click();
-		log.debug("Performed flash and click action.");
+		click(element);
 	}
 
 	public void flash(WebElement element) {
@@ -45,20 +46,41 @@ public class PageBase {
 		}
 
 		js.executeScript("arguments[0].setAttribute('style','border: solid 2px white')", element);
-		log.debug("Flashed on the given element.");
+		
+		log.debug("Flashed successful...");
 	}
 
 	public void moveToElement(WebElement element) {
 		flash(element);
 		action.moveToElement(element).build().perform();
-		log.debug("Moved to given element.");
 	}
 
 	public void scrolToElement(WebElement element) {
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView();", element);
-		log.debug("Scrolled to given element.");
 
+	}
+
+	public void waitForPageLoad(int timeOut) {
+
+		long endTime = System.currentTimeMillis() + timeOut;
+
+		while (System.currentTimeMillis() < endTime) {
+
+			String pageState = jsx.executeScript("return document.readyState").toString();
+			if (pageState.equals("complete")) {
+				System.out.println("page DOM is fully loaded now.....");
+				break;
+			}
+		}
+	}
+	
+	public void navigateForward() {
+		
+	}
+	
+	public void navigateBack() {
+		driver.navigate().back();
 	}
 }
