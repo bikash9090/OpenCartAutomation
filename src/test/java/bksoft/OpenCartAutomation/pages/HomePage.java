@@ -213,12 +213,13 @@ public class HomePage extends PageBase {
 
 	public void clickOnFeaturedProductTitle(String fprod) {
 		Boolean flag = false;
-		log.info("Clicking on featured product.");
+		log.info("Clicking on featured product title : "+fprod);
 
 		for (WebElement featured : featuredProductTitles) {
 			System.out.println(featured.getText());
-			if (featured.getText().toLowerCase().contains(fprod)) {
+			if (featured.getText().contains(fprod)) {
 
+				scrolToElement(featured);
 				flashAndclick(featured);
 				flag = true;
 				break;
