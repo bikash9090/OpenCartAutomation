@@ -1,5 +1,7 @@
 package bksoft.OpenCartAutomation.testcases;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -11,6 +13,7 @@ import bksoft.OpenCartAutomation.pages.HomePage;
 
 public class HomePageTest extends TestBase {
 	HomePage hp;
+	Logger log = LogManager.getLogger(HomePageTest.class.getName());
 
 	@BeforeClass
 	public void initialization() {
@@ -57,21 +60,22 @@ public class HomePageTest extends TestBase {
 
 	// All category name on HomePage.
 	@DataProvider(name = "categoriesData")
-	public String[][] categoryData() {
+	public String[][] categories() {
 		return new String[][] { { "Tablets" }, { "Software" }, { "Phones & PDAs" }, { "Cameras" } };
 	}
 
 	@Test(dataProvider = "categoriesData")
 	public void verifyCategoryPages(String cat) throws InterruptedException {
 
+		
 		hp.clickOnCategory(cat);
 		hp.waitForPageLoad(1000);
-		driver.navigate().back();
+		hp.navigateBack();
 
 	}
 
-	@DataProvider(name = "hoverCategory")
-	public String[][] hoverCategory() {
+	@DataProvider(name = "subCategoriesData")
+	public String[][] subCategories() {
 		return new String[][] { { "Desktops", "PC" }, { "Desktops", "Mac" }, { "Laptops & Notebooks", "Macs" },
 				{ "Laptops & Notebooks", "Windows" }, { "Components", "Mice and Trackballs" },
 				{ "Components", "Monitors" }, { "Components", "Printers" }, { "Components", "Scanners" },
@@ -84,7 +88,7 @@ public class HomePageTest extends TestBase {
 				{ "MP3 Players", "test 9" }, };
 	}
 
-	@Test(dataProvider = "hoverCategory")
+	@Test(dataProvider = "subCategoriesData")
 	public void verifySubCategoryPages(String category, String subcategory) {
 		hp.hoverOverCategory(category);
 		hp.clickOnSubCategory(subcategory);
@@ -92,7 +96,24 @@ public class HomePageTest extends TestBase {
 	}
 
 	// { "MP3 Players" },
+	
+	@DataProvider(name = "featuredProductTitlesData")
+	public String[][] featuredProductTitles() {
+		return new String[][] { { "MacBook" },{ "iphone" },{ "Apple Cinema" },{ "Canon EOS 5D" }, };
+		
+	}
 
+	@Test(dataProvider = "featuredProductTitlesData")
+	public void featuredProductDetails(String title) throws InterruptedException {
+		hp.clickOnFeaturedProductTitle(title);
+		hp.navigateBack();
+		Thread.sleep(1000);
+		hp.reloadPage();
+		Thread.sleep(1000);
+	}
+	
+	
+	
 	@Test()
 	public void validatingHomepageLocatorsFunctionality() throws InterruptedException {
 
