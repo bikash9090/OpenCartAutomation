@@ -77,10 +77,17 @@ public class PageBase {
 	}
 	
 	public void navigateForward() {
-		
+		driver.navigate().forward();
+		log.debug("Navigate forward successful...");
 	}
 	
 	public void navigateBack() {
 		driver.navigate().back();
+		log.debug("Navigate back successful...");
+	}
+	
+	public void reloadPage() {
+		driver.navigate().refresh();
+		log.debug("Page reload successful...");
 	}
 }
