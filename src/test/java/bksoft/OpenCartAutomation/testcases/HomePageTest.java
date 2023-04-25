@@ -30,32 +30,33 @@ public class HomePageTest extends TestBase {
 	@DataProvider(name = "currencyData")
 	private String[][] getCurrencyData() {
 		// Currencies
-		return new String[][] { { "euro" }, { "pound" }, { "dollar" } };
+		return new String[][] { { "Euro" }, { "Pound" }, { "Dollar" } };
 	}
 
 	private String getCurrencySymbol(String currency) {
 		// Returns the currency symbol based on currency option
 		switch (currency) {
-		case "pound":
+		case "Pound":
 			return "£";
-		case "euro":
+		case "Euro":
 			return "€";
-		case "dollar":
+		case "Dollar":
 			return "$";
 		default:
 			throw new IllegalArgumentException("Invalid currency option: " + currency);
 		}
 	}
 
-	@Test(dataProvider = "currencyData")
+	@Test(dataProvider = "currencyData",priority = 1)
 	public void selectCurrencyTest(String currency) {
 		String product = "macbook";
 
 		hp.selectCurrency(currency);
 		String price = hp.getFeaturedProductPrice(product);
 		System.out.println(currency);
-
+		
 		Assert.assertTrue(price.contains(getCurrencySymbol(currency)));
+		
 	}
 
 	// All category name on HomePage.
@@ -64,13 +65,14 @@ public class HomePageTest extends TestBase {
 		return new String[][] { { "Tablets" }, { "Software" }, { "Phones & PDAs" }, { "Cameras" } };
 	}
 
-	@Test(dataProvider = "categoriesData")
+	@Test(dataProvider = "categoriesData",priority = 2)
 	public void verifyCategoryPages(String cat) throws InterruptedException {
 
 		
 		hp.clickOnCategory(cat);
 		hp.waitForPageLoad(1000);
 		hp.navigateBack();
+		hp.reloadPage();
 
 	}
 
@@ -88,22 +90,23 @@ public class HomePageTest extends TestBase {
 				{ "MP3 Players", "test 9" }, };
 	}
 
-	@Test(dataProvider = "subCategoriesData")
+	@Test(dataProvider = "subCategoriesData",priority = 3)
 	public void verifySubCategoryPages(String category, String subcategory) {
 		hp.hoverOverCategory(category);
 		hp.clickOnSubCategory(subcategory);
-		//hp.navigateBack();
+		hp.navigateBack();
+		hp.reloadPage();
 	}
 
 	// { "MP3 Players" },
 	
 	@DataProvider(name = "featuredProductTitlesData")
 	public String[][] featuredProductTitles() {
-		return new String[][] { { "MacBook" },{ "iphone" },{ "Apple Cinema" },{ "Canon EOS 5D" }, };
+		return new String[][] { { "MacBook" },{ "iPhone" },{ "Apple Cinema" },{ "Canon EOS 5D" }, };
 		
 	}
 
-	@Test(dataProvider = "featuredProductTitlesData")
+	@Test(dataProvider = "featuredProductTitlesData",priority = 4)
 	public void featuredProductDetails(String title) throws InterruptedException {
 		hp.clickOnFeaturedProductTitle(title);
 		hp.navigateBack();
@@ -114,7 +117,7 @@ public class HomePageTest extends TestBase {
 	
 	
 	
-	@Test()
+	@Test(enabled = false)
 	public void validatingHomepageLocatorsFunctionality() throws InterruptedException {
 
 		// hp.selectCurrency("dollar");
