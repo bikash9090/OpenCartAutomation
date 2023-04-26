@@ -30,32 +30,16 @@ public class HomePageTest extends TestBase {
 	@DataProvider(name = "currencyData")
 	private String[][] getCurrencyData() {
 		// Currencies
-		return new String[][] { { "Euro" }, { "Pound" }, { "Dollar" } };
-	}
-
-	private String getCurrencySymbol(String currency) {
-		// Returns the currency symbol based on currency option
-		switch (currency) {
-		case "Pound":
-			return "£";
-		case "Euro":
-			return "€";
-		case "Dollar":
-			return "$";
-		default:
-			throw new IllegalArgumentException("Invalid currency option: " + currency);
-		}
+		return new String[][] { { "Euro","€" }, { "Pound","£" }, { "Dollar","$" } };
 	}
 
 	@Test(dataProvider = "currencyData",priority = 1)
-	public void selectCurrencyTest(String currency) {
+	public void selectCurrencyTest(String currency,String currencySymbol) {
 		String product = "macbook";
 
 		hp.selectCurrency(currency);
-		String price = hp.getFeaturedProductPrice(product);
-		System.out.println(currency);
-		
-		Assert.assertTrue(price.contains(getCurrencySymbol(currency)));
+		String price = hp.getFeaturedProductPrice(product);		
+		Assert.assertTrue(price.contains(currencySymbol));
 		
 	}
 
