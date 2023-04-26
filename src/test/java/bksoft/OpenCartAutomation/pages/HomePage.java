@@ -291,8 +291,9 @@ public class HomePage extends PageBase {
 				price = featured
 						.findElement(By.xpath("./following::div[@class='price']/child::span[@class=\"price-new\"]"))
 						.getText();
-				System.out.println(price);
+	
 				flag = true;
+				scrolToElement(currency);
 				break;
 			}
 
