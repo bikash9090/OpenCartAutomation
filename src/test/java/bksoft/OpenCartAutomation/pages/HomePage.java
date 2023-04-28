@@ -374,7 +374,7 @@ public class HomePage extends PageBase {
 
 	public void getHyperLinks(String heading) {
 		Boolean flag = false;
-		log.info("Getting the hyperlinks of heading : "+heading);
+		log.info("Getting the hyperlink of heading : "+heading);
 
 		for (WebElement hyperHeading : hyperLinkHeadings) {
 			scrolToElement(hyperHeading);
