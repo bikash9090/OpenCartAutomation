@@ -22,10 +22,10 @@ public class HomePage extends PageBase {
 
 	/*------------------------------Locators-----------------------------------*/
 
-	@FindBy(xpath = "//*[@id=\"form-currency\"]/div/a/span")
+	@FindBy(xpath = "//span[contains(text(),'Currency')]")
 	private WebElement currency;
 
-	@FindBys({ @FindBy(xpath = "//ul[@data-popper-placement=\"bottom-start\"]"), @FindBy(tagName = "li") })
+	@FindBys({@FindBy(xpath = "//span[contains(text(),'Currency')]/following::ul[1]"),@FindBy(tagName = "li")})
 	private List<WebElement> currencyList;
 
 	@FindBy(xpath = "//*[@id=\"top\"]/div[2]/div[2]/ul/li[1]/span")
@@ -90,14 +90,15 @@ public class HomePage extends PageBase {
 	public void selectCurrency(String cr) {
 		Boolean flag = false;
 
+		log.info("Clicking on currency list.");
 		flashAndclick(currency);
-		log.info("Flashed and clicked on currency list.");
 
 		for (WebElement cur : currencyList) {
-			if (cur.getText().toLowerCase().contains(cr)) {
+			System.out.println(cur.getText());
+			if (cur.getText().contains(cr)) {
 
+				log.info("Clicking on currency: "+cr);
 				flashAndclick(cur);
-				log.info("Flashed and clicked on currency : " + cr);
 				flag = true;
 				break;
 			}
@@ -213,12 +214,13 @@ public class HomePage extends PageBase {
 
 	public void clickOnFeaturedProductTitle(String fprod) {
 		Boolean flag = false;
-		log.info("Clicking on featured product.");
+		log.info("Clicking on featured product title : "+fprod);
 
 		for (WebElement featured : featuredProductTitles) {
 			System.out.println(featured.getText());
-			if (featured.getText().toLowerCase().contains(fprod)) {
+			if (featured.getText().contains(fprod)) {
 
+				scrolToElement(featured);
 				flashAndclick(featured);
 				flag = true;
 				break;
@@ -280,16 +282,18 @@ public class HomePage extends PageBase {
 		log.info("Getting the price of featured prouduct : " + fprod);
 
 		for (WebElement featured : featuredProductTitles) {
-			scrolToElement(featured);
+			
 			// System.out.println(featured.getText());
 			if (featured.getText().toLowerCase().contains(fprod)) {
+				scrolToElement(featured);
 				flash(featured
 						.findElement(By.xpath("./following::div[@class='price']/child::span[@class=\"price-new\"]")));
 				price = featured
 						.findElement(By.xpath("./following::div[@class='price']/child::span[@class=\"price-new\"]"))
 						.getText();
-				System.out.println(price);
+	
 				flag = true;
+				scrolToElement(currency);
 				break;
 			}
 
