@@ -24,17 +24,22 @@ public class PageBase {
 		jsx = (JavascriptExecutor) driver;
 	}
 
-	public void click(WebElement element) {
+	protected void click(WebElement element) {
 		element.click();
 		log.debug("Clicked successful...");
 	}
 
-	public void flashAndclick(WebElement element) {
+	protected void flashAndclick(WebElement element) {
 		flash(element);
 		click(element);
 	}
+	
+	protected void enterText(WebElement	element,String keyword) {
+		element.sendKeys(keyword);
+		log.debug("Given text entered successful...");
+	}
 
-	public void flash(WebElement element) {
+	protected void flash(WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor) driver; // downcasting
 
 		js.executeScript("arguments[0].setAttribute('style','background: yellow; border: solid 5px red')", element);
@@ -50,12 +55,12 @@ public class PageBase {
 		log.debug("Flashed successful...");
 	}
 
-	public void moveToElement(WebElement element) {
+	protected void moveToElement(WebElement element) {
 		flash(element);
 		action.moveToElement(element).build().perform();
 	}
 
-	public void scrolToElement(WebElement element) {
+	protected void scrolToElement(WebElement element) {
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView();", element);
