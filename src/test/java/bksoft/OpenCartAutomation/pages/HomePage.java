@@ -18,7 +18,7 @@ public class HomePage extends PageBase {
 
 	Logger log = LogManager.getLogger(HomePage.class.getName());
 
-	WebDriver driver;
+	//WebDriver driver;
 
 	/*------------------------------Locators-----------------------------------*/
 
