@@ -68,14 +68,15 @@ public class PageBase {
 	}
 
 	public void waitForPageLoad(int timeOut) {
-
+		
+		log.info("Waiting for page to load of milisecond : "+timeOut);
 		long endTime = System.currentTimeMillis() + timeOut;
 
 		while (System.currentTimeMillis() < endTime) {
 
 			String pageState = jsx.executeScript("return document.readyState").toString();
 			if (pageState.equals("complete")) {
-				System.out.println("page DOM is fully loaded now.....");
+				log.debug("page DOM is fully loaded now....");
 				break;
 			}
 		}

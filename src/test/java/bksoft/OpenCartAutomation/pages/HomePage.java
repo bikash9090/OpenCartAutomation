@@ -83,6 +83,7 @@ public class HomePage extends PageBase {
 		super(driver);
 
 		PageFactory.initElements(driver, this);
+		log.info("Home page object instantiated.");
 	}
 
 	/*-------------------------Generic actions methods-----------------------------*/
