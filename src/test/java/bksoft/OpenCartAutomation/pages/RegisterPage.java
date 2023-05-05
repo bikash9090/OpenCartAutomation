@@ -86,6 +86,7 @@ public class RegisterPage extends PageBase {
 	public RegisterPage(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
+		log.info("Registration page object instantiated.");
 	}
 
 	// Generic actions//
