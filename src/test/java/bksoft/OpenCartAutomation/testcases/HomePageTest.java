@@ -10,9 +10,11 @@ import org.testng.annotations.Test;
 
 import bksoft.OpenCartAutomation.base.TestBase;
 import bksoft.OpenCartAutomation.pages.HomePage;
+import bksoft.OpenCartAutomation.pages.ProductsListPage;
 
 public class HomePageTest extends TestBase {
 	HomePage hp;
+	ProductsListPage pobj;
 	Logger log = LogManager.getLogger(HomePageTest.class.getName());
 
 	@BeforeClass
@@ -20,6 +22,7 @@ public class HomePageTest extends TestBase {
 		log.info("Initializing driver object.");
 		setUpDriver();
 		hp = new HomePage(driver);
+		pobj = new ProductsListPage(driver);
 	}
 
 	@AfterClass
@@ -122,7 +125,7 @@ public class HomePageTest extends TestBase {
 	@Test()
 	public void validatingHomepageLocatorsFunctionality() throws InterruptedException {
 
-		// hp.selectCurrency("dollar");
+		 hp.selectCurrency("Pound");
 		// hp.clickOnMyAccount();
 		// hp.clickOnRegister();
 		// hp.clickOnLogin();
@@ -133,7 +136,7 @@ public class HomePageTest extends TestBase {
 		// hp.searchItem("iPhone 13");
 		// hp.clickOnCartItems();
 		// hp.clickOnCategory("4");
-		hp.hoverOverCategory("Desktops");
+		// hp.hoverOverCategory("Desktops");
 		// hp.clickOnSubCategory("printers");
 		// hp.clickOnFeaturedProductTitle("canon eos");
 		// hp.getFeaturedProductProductTitle("canon eos");
@@ -144,6 +147,13 @@ public class HomePageTest extends TestBase {
 		// hp.clickOnFeaturedProductCompareThisProduct("macbook");
 		// hp.clickOnHyperLink("extras","brands");
 
+		hp.clickOnCategory("Cameras");
+		//pobj.getProductDescription("HTC Touch HD");
+		pobj.getProductPriceAndTax("Canon EOS 5D");
+		pobj.compareThisProduct("Canon EOS 5D");
+		
+		
+		
 		Thread.sleep(3000);
 	}
 }
