@@ -95,7 +95,6 @@ public class HomePage extends PageBase {
 		flashAndclick(currency);
 
 		for (WebElement cur : currencyList) {
-			System.out.println(cur.getText());
 			if (cur.getText().contains(cr)) {
 
 				log.info("Clicking on currency: "+cr);
