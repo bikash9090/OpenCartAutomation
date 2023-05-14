@@ -18,7 +18,7 @@ public class HomePage extends PageBase {
 
 	Logger log = LogManager.getLogger(HomePage.class.getName());
 
-	WebDriver driver;
+	//WebDriver driver;
 
 	/*------------------------------Locators-----------------------------------*/
 
@@ -83,6 +83,7 @@ public class HomePage extends PageBase {
 		super(driver);
 
 		PageFactory.initElements(driver, this);
+		log.info("Home page object instantiated.");
 	}
 
 	/*-------------------------Generic actions methods-----------------------------*/
@@ -94,7 +95,6 @@ public class HomePage extends PageBase {
 		flashAndclick(currency);
 
 		for (WebElement cur : currencyList) {
-			System.out.println(cur.getText());
 			if (cur.getText().contains(cr)) {
 
 				log.info("Clicking on currency: "+cr);
@@ -374,11 +374,11 @@ public class HomePage extends PageBase {
 
 	public void getHyperLinks(String heading) {
 		Boolean flag = false;
-		log.info("Getting the hyperlinks.");
+		log.info("Getting the hyperlink of heading : "+heading);
 
 		for (WebElement hyperHeading : hyperLinkHeadings) {
 			scrolToElement(hyperHeading);
-			if (hyperHeading.getText().toLowerCase().contains(heading)) {
+			if (hyperHeading.getText().contains(heading)) {
 				flash(hyperHeading);
 				hyperLinks = hyperHeading.findElement(By.xpath("./following-sibling::ul"))
 						.findElements(By.tagName("a"));
@@ -398,11 +398,11 @@ public class HomePage extends PageBase {
 		Boolean flag = false;
 
 		getHyperLinks(heading);
-		log.info("Clicking on hyperlink.");
+		log.info("Clicking on hyperlink : "+hyperLink);
 
 		for (WebElement link : hyperLinks) {
 			System.out.println(link.getText());
-			if (link.getText().toLowerCase().contains(hyperLink)) {
+			if (link.getText().contains(hyperLink)) {
 				flashAndclick(link);
 				flag = true;
 				break;
@@ -410,8 +410,8 @@ public class HomePage extends PageBase {
 
 		}
 		if (!flag) {
-			log.error("Hyperlink heading not found!");
-			throw new NoSuchElementException("Hyperlink : " + heading + " not found!");
+			log.error("hyperlink not found!");
+			throw new NoSuchElementException("hyperlink not found! " +hyperLink);
 		}
 	}
 

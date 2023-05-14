@@ -24,17 +24,22 @@ public class PageBase {
 		jsx = (JavascriptExecutor) driver;
 	}
 
-	public void click(WebElement element) {
+	protected void click(WebElement element) {
 		element.click();
 		log.debug("Clicked successful...");
 	}
 
-	public void flashAndclick(WebElement element) {
+	protected void flashAndclick(WebElement element) {
 		flash(element);
 		click(element);
 	}
+	
+	protected void enterText(WebElement	element,String keyword) {
+		element.sendKeys(keyword);
+		log.debug("Given text entered successful...");
+	}
 
-	public void flash(WebElement element) {
+	protected void flash(WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor) driver; // downcasting
 
 		js.executeScript("arguments[0].setAttribute('style','background: yellow; border: solid 5px red')", element);
@@ -50,12 +55,12 @@ public class PageBase {
 		log.debug("Flashed successful...");
 	}
 
-	public void moveToElement(WebElement element) {
+	protected void moveToElement(WebElement element) {
 		flash(element);
 		action.moveToElement(element).build().perform();
 	}
 
-	public void scrolToElement(WebElement element) {
+	protected void scrolToElement(WebElement element) {
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView();", element);
@@ -63,14 +68,15 @@ public class PageBase {
 	}
 
 	public void waitForPageLoad(int timeOut) {
-
+		
+		log.info("Waiting for page to load of milisecond : "+timeOut);
 		long endTime = System.currentTimeMillis() + timeOut;
 
 		while (System.currentTimeMillis() < endTime) {
 
 			String pageState = jsx.executeScript("return document.readyState").toString();
 			if (pageState.equals("complete")) {
-				System.out.println("page DOM is fully loaded now.....");
+				log.debug("page DOM is fully loaded now....");
 				break;
 			}
 		}

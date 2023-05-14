@@ -10,19 +10,24 @@ import org.testng.annotations.Test;
 
 import bksoft.OpenCartAutomation.base.TestBase;
 import bksoft.OpenCartAutomation.pages.HomePage;
+import bksoft.OpenCartAutomation.pages.ProductsListPage;
 
 public class HomePageTest extends TestBase {
 	HomePage hp;
+	ProductsListPage pobj;
 	Logger log = LogManager.getLogger(HomePageTest.class.getName());
 
 	@BeforeClass
 	public void initialization() {
+		log.info("Initializing driver object.");
 		setUpDriver();
 		hp = new HomePage(driver);
+		pobj = new ProductsListPage(driver);
 	}
 
 	@AfterClass
 	public void tearDown() {
+		log.info("Destroying driver object.");
 		tearDownDriver();
 	}
 
@@ -30,17 +35,20 @@ public class HomePageTest extends TestBase {
 	@DataProvider(name = "currencyData")
 	private String[][] getCurrencyData() {
 		// Currencies
-		return new String[][] { { "Euro","€" }, { "Pound","£" }, { "Dollar","$" } };
+		return new String[][] { { "Euro", "€" }, { "Pound", "£" }, { "Dollar", "$" } };
 	}
 
-	@Test(dataProvider = "currencyData",priority = 1)
-	public void selectCurrencyTest(String currency,String currencySymbol) {
+	@Test(dataProvider = "currencyData", priority = 1)
+	public void selectCurrencyTest(String currency, String currencySymbol) {
+		log.info("TC_001_SELECT CURRENCY TEST.");
 		String product = "macbook";
 
 		hp.selectCurrency(currency);
-		String price = hp.getFeaturedProductPrice(product);		
-		Assert.assertTrue(price.contains(currencySymbol));
+		String price = hp.getFeaturedProductPrice(product);
 		
+		log.info("Asserting currency selection.");
+		Assert.assertTrue(price.contains(currencySymbol));
+
 	}
 
 	// All category name on HomePage.
@@ -49,10 +57,10 @@ public class HomePageTest extends TestBase {
 		return new String[][] { { "Tablets" }, { "Software" }, { "Phones & PDAs" }, { "Cameras" } };
 	}
 
-	@Test(dataProvider = "categoriesData",priority = 2)
+	@Test(dataProvider = "categoriesData", priority = 2)
 	public void verifyCategoryPages(String cat) throws InterruptedException {
+		log.info("TC_002 VERIFY CATEGORY PAGES TEST.");
 
-		
 		hp.clickOnCategory(cat);
 		hp.waitForPageLoad(1000);
 		hp.navigateBack();
@@ -74,8 +82,9 @@ public class HomePageTest extends TestBase {
 				{ "MP3 Players", "test 9" }, };
 	}
 
-	@Test(dataProvider = "subCategoriesData",priority = 3)
+	@Test(dataProvider = "subCategoriesData", priority = 3)
 	public void verifySubCategoryPages(String category, String subcategory) {
+		log.info("TC_003 VERIFY SUBCATEGORY PAGES TEST.");
 		hp.hoverOverCategory(category);
 		hp.clickOnSubCategory(subcategory);
 		hp.navigateBack();
@@ -83,28 +92,40 @@ public class HomePageTest extends TestBase {
 	}
 
 	// { "MP3 Players" },
-	
+
 	@DataProvider(name = "featuredProductTitlesData")
 	public String[][] featuredProductTitles() {
-		return new String[][] { { "MacBook" },{ "iPhone" },{ "Apple Cinema" },{ "Canon EOS 5D" }, };
-		
+		return new String[][] { { "MacBook" }, { "iPhone" }, { "Apple Cinema" }, { "Canon EOS 5D" }, };
+
 	}
 
-	@Test(dataProvider = "featuredProductTitlesData",priority = 4)
+	@Test(dataProvider = "featuredProductTitlesData", priority = 4)
 	public void featuredProductDetails(String title) throws InterruptedException {
+		log.info("TC_004 VERIFY PRODUCT DETAILS TEST.");
 		hp.clickOnFeaturedProductTitle(title);
 		hp.navigateBack();
 		Thread.sleep(1000);
 		hp.reloadPage();
 		Thread.sleep(1000);
 	}
-	
-	
-	
-	@Test(enabled = false)
+
+	@DataProvider(name = "hyperlinkdata")
+	public String[][] hyperLinks() {
+		return new String[][] { { "Information", "Terms & Conditions" }, { "Information", "Delivery Information" },
+				{ "Information", "2About Us" }, { "Information", "Privacy Policy" }, };
+	}
+
+	@Test(dataProvider = "hyperlinkdata",priority = 5)
+	public void verifyHyperLinkPage(String heading, String hyperlink) {
+		log.info("TC_005 VERIFY HYPERLINK PAGES TEST.");
+		hp.clickOnHyperLink(heading, hyperlink);
+		hp.navigateBack();
+	}
+
+	@Test()
 	public void validatingHomepageLocatorsFunctionality() throws InterruptedException {
 
-		// hp.selectCurrency("dollar");
+		 hp.selectCurrency("Pound");
 		// hp.clickOnMyAccount();
 		// hp.clickOnRegister();
 		// hp.clickOnLogin();
@@ -115,7 +136,7 @@ public class HomePageTest extends TestBase {
 		// hp.searchItem("iPhone 13");
 		// hp.clickOnCartItems();
 		// hp.clickOnCategory("4");
-		hp.hoverOverCategory("Desktops");
+		// hp.hoverOverCategory("Desktops");
 		// hp.clickOnSubCategory("printers");
 		// hp.clickOnFeaturedProductTitle("canon eos");
 		// hp.getFeaturedProductProductTitle("canon eos");
@@ -126,6 +147,13 @@ public class HomePageTest extends TestBase {
 		// hp.clickOnFeaturedProductCompareThisProduct("macbook");
 		// hp.clickOnHyperLink("extras","brands");
 
+		hp.clickOnCategory("Cameras");
+		//pobj.getProductDescription("HTC Touch HD");
+		pobj.getProductPriceAndTax("Canon EOS 5D");
+		pobj.compareThisProduct("Canon EOS 5D");
+		
+		
+		
 		Thread.sleep(3000);
 	}
 }
