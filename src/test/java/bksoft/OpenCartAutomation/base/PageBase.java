@@ -19,7 +19,7 @@ public class PageBase {
 	Logger log = LogManager.getLogger(PageBase.class.getName());
 
 	public PageBase(WebDriver driver) {
-		this.driver = driver;		
+		this.driver = driver;
 		action = new Actions(driver);
 		jsx = (JavascriptExecutor) driver;
 	}
@@ -33,8 +33,8 @@ public class PageBase {
 		flash(element);
 		click(element);
 	}
-	
-	protected void enterText(WebElement	element,String keyword) {
+
+	protected void enterText(WebElement element, String keyword) {
 		element.sendKeys(keyword);
 		log.debug("Given text entered successful...");
 	}
@@ -51,7 +51,7 @@ public class PageBase {
 		}
 
 		js.executeScript("arguments[0].setAttribute('style','border: solid 2px white')", element);
-		
+
 		log.debug("Flashed successful...");
 	}
 
@@ -68,8 +68,8 @@ public class PageBase {
 	}
 
 	public void waitForPageLoad(int timeOut) {
-		
-		log.info("Waiting for page to load of milisecond : "+timeOut);
+
+		log.info("Waiting for page to load of milisecond : " + timeOut);
 		long endTime = System.currentTimeMillis() + timeOut;
 
 		while (System.currentTimeMillis() < endTime) {
@@ -81,19 +81,31 @@ public class PageBase {
 			}
 		}
 	}
-	
+
 	public void navigateForward() {
 		driver.navigate().forward();
 		log.debug("Navigate forward successful...");
 	}
-	
+
 	public void navigateBack() {
 		driver.navigate().back();
 		log.debug("Navigate back successful...");
 	}
-	
+
 	public void reloadPage() {
 		driver.navigate().refresh();
 		log.debug("Page reload successful...");
+	}
+
+	public String getTitle() {
+		String title = driver.getTitle();
+		log.info("Title of the page is : [" + title + "]");
+		return title;
+	}
+	
+	public String getUrl() {
+		String url = driver.getCurrentUrl();
+		log.info("URL of the page is : [" + url + "]");
+		return url;
 	}
 }
