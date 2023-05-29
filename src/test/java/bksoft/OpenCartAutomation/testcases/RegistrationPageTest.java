@@ -19,7 +19,7 @@ public class RegistrationPageTest extends TestBase{
 		hp = new HomePage(driver);
 		reg = new RegisterPage(driver);
 	}
-
+	
 	@AfterClass
 	public void tearDown() {
 		tearDownDriver();
