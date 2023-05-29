@@ -30,4 +30,8 @@ public class PropertiesUtil {
 	public String getBrowser() {
 		return prop.getProperty("browser");
 	}
+	
+	public String getReportPath() {
+		return prop.getProperty("reportPath");
+	}
 }
