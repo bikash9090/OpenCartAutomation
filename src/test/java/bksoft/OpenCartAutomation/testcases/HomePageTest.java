@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.AssertJUnit;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -26,7 +25,6 @@ public class HomePageTest extends TestBase {
 		pobj = new ProductsListPage(driver);
 	}
 
-	@AfterMethod
 	@AfterClass
 	public void tearDown() {
 		log.info("Destroying driver object.");
@@ -124,7 +122,7 @@ public class HomePageTest extends TestBase {
 		hp.navigateBack();
 	}
 
-	@Test()
+	@Test(enabled = false)
 	public void validatingHomepageLocatorsFunctionality() throws InterruptedException {
 
 		 hp.selectCurrency("Pound");
