@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class PropertiesUtil {
 
-	String path =  System.getProperty("user.dir")+"\\src\\test\\resources\\config.properties";
+	String path = System.getProperty("user.dir") + "\\src\\test\\resources\\config.properties";
 	Properties prop;
 
 	public PropertiesUtil() {
@@ -30,8 +30,16 @@ public class PropertiesUtil {
 	public String getBrowser() {
 		return prop.getProperty("browser");
 	}
-	
+
 	public String getReportPath() {
 		return prop.getProperty("reportPath");
+	}
+
+	public String getHeadless() {
+		return prop.getProperty("headless");
+	}
+
+	public String getIncognito() {
+		return prop.getProperty("incognito");
 	}
 }
