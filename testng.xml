@@ -3,12 +3,12 @@
 <suite name="OpenCartAutomationSuite">
 
 	<listeners>
-		<listener
-			class-name="bksoft.OpenCartAutomation.listeners.ExtentReportListener"></listener>
+		<listener class-name="bksoft.OpenCartAutomation.listeners.ExtentReportListener"></listener>
 	</listeners>
 	<test thread-count="5" name="Test">
 		<classes>
-			<class name="bksoft.OpenCartAutomation.testcases.RegistrationPageTest" />
+			<class
+				name="bksoft.OpenCartAutomation.testcases.HomePageTest" />
 		</classes>
 	</test> <!--
 	Test -->
