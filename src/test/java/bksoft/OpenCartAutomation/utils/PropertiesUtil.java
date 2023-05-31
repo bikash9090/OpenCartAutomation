@@ -39,7 +39,7 @@ public class PropertiesUtil {
 		return prop.getProperty("headless");
 	}
 
-	public String getIncognito() {
+	public String getIcognito() {
 		return prop.getProperty("incognito");
 	}
 }
