@@ -7,12 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-import bksoft.OpenCartAutomation.utils.PageActionsUtil;
 
 public class PageBase {
 
 	protected WebDriver driver;
-	PageActionsUtil pageUtil;
 	Actions action;
 	JavascriptExecutor jsx;
 
