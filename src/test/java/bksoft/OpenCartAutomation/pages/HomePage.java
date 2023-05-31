@@ -199,7 +199,6 @@ public class HomePage extends PageBase {
 		log.info("Clicking on sub category : " + subCat);
 
 		for (WebElement subElement : subCategories) {
-			System.out.println(subElement.getText());
 			if (subElement.getText().contains(subCat)) {
 				flashAndclick(subElement);
 				flag = true;
@@ -217,7 +216,6 @@ public class HomePage extends PageBase {
 		log.info("Clicking on featured product title : "+fprod);
 
 		for (WebElement featured : featuredProductTitles) {
-			System.out.println(featured.getText());
 			if (featured.getText().contains(fprod)) {
 
 				scrolToElement(featured);
@@ -238,7 +236,6 @@ public class HomePage extends PageBase {
 		log.info("Getting titles of featured product : " + fprod);
 
 		for (WebElement featured : featuredProductTitles) {
-			System.out.println(featured.getText());
 			if (featured.getText().toLowerCase().contains(fprod)) {
 
 				fprodTitle = featured.getText();
@@ -401,7 +398,6 @@ public class HomePage extends PageBase {
 		log.info("Clicking on hyperlink : "+hyperLink);
 
 		for (WebElement link : hyperLinks) {
-			System.out.println(link.getText());
 			if (link.getText().contains(hyperLink)) {
 				flashAndclick(link);
 				flag = true;
@@ -414,5 +410,4 @@ public class HomePage extends PageBase {
 			throw new NoSuchElementException("hyperlink not found! " +hyperLink);
 		}
 	}
-
 }
