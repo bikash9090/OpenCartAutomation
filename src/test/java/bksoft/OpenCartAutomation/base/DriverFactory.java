@@ -35,7 +35,7 @@ public class DriverFactory {
 		if (tlDriver.get() == null) {
 
 			if (readconfig.getBrowser().equalsIgnoreCase("firefox")) {
-				
+
 				WebDriverManager.firefoxdriver().setup();
 				FirefoxOptions ffOptions = setFFOptions();
 				driver = new FirefoxDriver(ffOptions);
@@ -72,8 +72,16 @@ public class DriverFactory {
 	private ChromeOptions setChromeOptions() {
 
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments("disable-infobars");
-		options.setAcceptInsecureCerts(true);
+
+		if (readconfig.getHeadless().equalsIgnoreCase("true")) {
+			options.addArguments("--headless");
+		} else if (readconfig.getIcognito().equalsIgnoreCase("true")) {
+			options.addArguments("--incognito");
+		} else {
+
+			options.addArguments("disable-infobars");
+			options.setAcceptInsecureCerts(true);
+		}
 
 		return options;
 	}
@@ -81,8 +89,16 @@ public class DriverFactory {
 	private FirefoxOptions setFFOptions() {
 
 		FirefoxOptions options = new FirefoxOptions();
-		options.addArguments("disable-infobars");
-		options.setAcceptInsecureCerts(true);
+
+		if (readconfig.getHeadless().equalsIgnoreCase("true")) {
+			options.addArguments("--headless");
+		} else if (readconfig.getIcognito().equalsIgnoreCase("true")) {
+			options.addArguments("--incognito");
+		} else {
+
+			options.addArguments("disable-infobars");
+			options.setAcceptInsecureCerts(true);
+		}
 
 		return options;
 	}
@@ -90,8 +106,16 @@ public class DriverFactory {
 	private EdgeOptions setEdgeOptions() {
 
 		EdgeOptions options = new EdgeOptions();
-		options.addArguments("disable-infobars");
-		options.setAcceptInsecureCerts(true);
+
+		if (readconfig.getHeadless().equalsIgnoreCase("true")) {
+			options.addArguments("--headless");
+		} else if (readconfig.getIcognito().equalsIgnoreCase("true")) {
+			options.addArguments("--incognito");
+		} else {
+
+			options.addArguments("disable-infobars");
+			options.setAcceptInsecureCerts(true);
+		}
 
 		return options;
 	}
