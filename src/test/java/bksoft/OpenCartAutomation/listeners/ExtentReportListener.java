@@ -3,7 +3,6 @@ package bksoft.OpenCartAutomation.listeners;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -20,7 +19,6 @@ public class ExtentReportListener implements ITestListener {
 	private static ExtentReports extent = ExtentManager.init();
 	public static ExtentTest test;
 	ScreenshotUtils scrObj;
-	WebDriver driver;
 
 	@Override
 	public synchronized void onStart(ITestContext context) {
@@ -73,8 +71,7 @@ public class ExtentReportListener implements ITestListener {
 		test.log(Status.FAIL, "Test Failed");
 		test.log(Status.FAIL, result.getThrowable().getMessage());
 		
-		driver = DriverFactory.getDriver();
-		scrObj = new ScreenshotUtils(driver);
+		scrObj = new ScreenshotUtils(DriverFactory.getDriver());
 		String imgPath = scrObj.getScreenshot(result.getName());
 		test.addScreenCaptureFromPath(imgPath);
 		
@@ -83,14 +80,14 @@ public class ExtentReportListener implements ITestListener {
 
 	@Override
 	public synchronized void onTestSkipped(ITestResult result) {
+		
 		test = extent.createTest(result.getName());
 		test.log(Status.SKIP, "Test Skipped");
 		test.log(Status.SKIP, result.getThrowable().getMessage());
 		String methodName = result.getMethod().getMethodName();
 		System.out.println((methodName + " skipped!"));
 		
-		driver = DriverFactory.getDriver();
-		scrObj = new ScreenshotUtils(driver);
+		scrObj = new ScreenshotUtils(DriverFactory.getDriver());
 		String imgPath = scrObj.getScreenshot(result.getName());
 		test.addScreenCaptureFromPath(imgPath);
 		

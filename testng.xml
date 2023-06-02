@@ -6,11 +6,9 @@
 		<listener
 			class-name="bksoft.OpenCartAutomation.listeners.ExtentReportListener" />
 	</listeners>
-	<test thread-count="5" name="Test" >
+	<test thread-count="5" name="Test">
 		<classes>
 			<class name="bksoft.OpenCartAutomation.testcases.HomePageTest" />
 		</classes>
-	</test> <!--
-	Test -->
-</suite> <!--
-Suite -->
+	</test>
+</suite>
