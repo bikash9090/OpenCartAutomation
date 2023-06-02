@@ -15,21 +15,19 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverFactory {
 
-	PropertiesUtil readconfig = new PropertiesUtil();
+	private PropertiesUtil readconfig = new PropertiesUtil();
 	private static final DriverFactory instance = new DriverFactory();
 
 	private DriverFactory() {
-
 	}
 
 	public static DriverFactory getDriverInstance() {
-
 		return instance;
 	}
 
 	private static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
 
-	public WebDriver getDriver(String browser) throws IOException {
+	public WebDriver initializeDriver() throws IOException {
 
 		WebDriver driver = null;
 		if (tlDriver.get() == null) {
@@ -80,7 +78,6 @@ public class DriverFactory {
 		} else {
 
 			options.addArguments("disable-infobars");
-			options.setAcceptInsecureCerts(true);
 		}
 
 		return options;
@@ -97,7 +94,6 @@ public class DriverFactory {
 		} else {
 
 			options.addArguments("disable-infobars");
-			options.setAcceptInsecureCerts(true);
 		}
 
 		return options;
@@ -114,7 +110,6 @@ public class DriverFactory {
 		} else {
 
 			options.addArguments("disable-infobars");
-			options.setAcceptInsecureCerts(true);
 		}
 
 		return options;
