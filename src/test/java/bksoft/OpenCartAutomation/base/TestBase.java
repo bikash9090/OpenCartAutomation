@@ -1,6 +1,7 @@
 package bksoft.OpenCartAutomation.base;
 
 import java.io.IOException;
+import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
 
@@ -20,7 +21,7 @@ public class TestBase {
 		}
 
 		driver.get(readconfig.getUrl());
-		// driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
 		driver.manage().window().maximize();
 	}
 
