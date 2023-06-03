@@ -379,7 +379,6 @@ public class HomePage extends PageBase {
 				flash(hyperHeading);
 				hyperLinks = hyperHeading.findElement(By.xpath("./following-sibling::ul"))
 						.findElements(By.tagName("a"));
-				System.out.println(hyperHeading.getText());
 				flag = true;
 				break;
 			}
