@@ -22,9 +22,9 @@ public class ExtentReportListener implements ITestListener {
 
 	@Override
 	public synchronized void onStart(ITestContext context) {
-	        
+
 		System.out.println("The test suite started successful...");
-		
+
 	}
 
 	@Override
@@ -42,55 +42,65 @@ public class ExtentReportListener implements ITestListener {
 		int last = qualifiedName.lastIndexOf(".");
 		int mid = qualifiedName.substring(0, last).lastIndexOf(".");
 
+		Object[] parameters = result.getParameters();
+		StringBuilder parameterValues = new StringBuilder();
+
+		for (Object parameter : parameters) {
+			parameterValues.append(parameter).append(", ");
+		}
+
+		// Remove the trailing comma and space
+		String parameterString = parameterValues.toString().replaceAll(", $", "");
+
 		String className = qualifiedName.substring(mid + 1, last);
+		String methodNamewithParam = methodName + "('" + parameterString + "')";
 
-		System.out.println(methodName + " started!");
+		System.out.println(methodNamewithParam + " started!");
 
-		ExtentTest extentTest = extent.createTest(methodName, result.getMethod().getDescription());
+		test = extent.createTest(methodNamewithParam, result.getMethod().getDescription());
 
-		extentTest.assignCategory(result.getTestContext().getSuite().getName());
-		extentTest.assignCategory(className);
+		test.assignCategory(result.getTestContext().getSuite().getName());
+		test.assignCategory(className);
 
 	}
 
 	@Override
 	public synchronized void onTestSuccess(ITestResult result) {
-		
-		String methodName = result.getMethod().getMethodName();
-		System.out.println((methodName + " passed!"));
-		test = extent.createTest(result.getName());
+
 		test.log(Status.PASS, "Test Passed");
+		System.out.println("Test Passed!");
 	}
 
 	@Override
 	public synchronized void onTestFailure(ITestResult result) {
-		
-		String methodName = result.getMethod().getMethodName();
-		System.out.println((methodName + " failed!"));
-		test = extent.createTest(result.getName());
+
+		scrObj = new ScreenshotUtils(DriverFactory.getDriver());
+
+		String imgPath = scrObj.getScreenshot(result.getName());
+
+		test.addScreenCaptureFromPath(imgPath);
+		test.getModel().setEndTime(getTime(result.getEndMillis()));
+
 		test.log(Status.FAIL, "Test Failed");
 		test.log(Status.FAIL, result.getThrowable().getMessage());
-		
-		scrObj = new ScreenshotUtils(DriverFactory.getDriver());
-		String imgPath = scrObj.getScreenshot(result.getName());
-		test.addScreenCaptureFromPath(imgPath);
-		
-		test.getModel().setEndTime(getTime(result.getEndMillis()));
+
+		System.out.println("Test failed!");
+
 	}
 
 	@Override
 	public synchronized void onTestSkipped(ITestResult result) {
-		
+
 		test = extent.createTest(result.getName());
 		test.log(Status.SKIP, "Test Skipped");
 		test.log(Status.SKIP, result.getThrowable().getMessage());
 		String methodName = result.getMethod().getMethodName();
 		System.out.println((methodName + " skipped!"));
-		
+
 		scrObj = new ScreenshotUtils(DriverFactory.getDriver());
 		String imgPath = scrObj.getScreenshot(result.getName());
 		test.addScreenCaptureFromPath(imgPath);
-		
+
 		test.getModel().setEndTime(getTime(result.getEndMillis()));
 	}
 
@@ -103,7 +113,7 @@ public class ExtentReportListener implements ITestListener {
 	public synchronized void onTestFailedWithTimeout(ITestResult result) {
 		System.out.println(("onTestFailedWithTimeout for " + result.getMethod().getMethodName()));
 	}
-	
+
 	private Date getTime(long millis) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(millis);
