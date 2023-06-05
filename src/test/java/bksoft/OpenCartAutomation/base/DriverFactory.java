@@ -75,7 +75,11 @@ public class DriverFactory {
 			options.addArguments("--headless");
 		} else if (readconfig.getIcognito().equalsIgnoreCase("true")) {
 			options.addArguments("--incognito");
-		} 
+		} else {
+
+			options.addArguments("disable-infobars");
+		}
+
 		return options;
 	}
 
@@ -100,11 +104,7 @@ public class DriverFactory {
 			options.addArguments("--headless");
 		} else if (readconfig.getIcognito().equalsIgnoreCase("true")) {
 			options.addArguments("--incognito");
-		} else {
-
-			options.addArguments("disable-infobars");
-		}
-
+		} 
 		return options;
 	}
 }
