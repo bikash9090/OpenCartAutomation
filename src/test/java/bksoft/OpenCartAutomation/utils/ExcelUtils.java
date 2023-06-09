@@ -12,7 +12,7 @@ public class ExcelUtils {
 	public FileInputStream fis = null;
 	private XSSFWorkbook workbook = null;
 	private XSSFSheet sheet = null;
-	private String excelPath = System.getProperty("user.dir") + "\\src\\test\\resources\\TestData.xlsx";
+	private String excelPath = System.getProperty("user.dir") + "\\src\\test\\resources\\UserDetails.xlsx";
 
 	public Object[][] getTestData(String sheetName) {
 		File path = new File(excelPath);
@@ -35,7 +35,11 @@ public class ExcelUtils {
 
 		for (int i = 0; i < rowCount; i++) {
 			for (int j = 0; j < colCount; j++) {
-				data[i][j] = sheet.getRow(i + 1).getCell(j).toString();
+				if (sheet.getRow(i + 1).getCell(j) != null) {
+					data[i][j] = sheet.getRow(i + 1).getCell(j).toString();
+				} else {
+					data[i][j] = ""; // Set the value to empty string if cell is blank
+				}
 			}
 		}
 		return data;

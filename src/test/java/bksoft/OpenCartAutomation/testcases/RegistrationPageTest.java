@@ -32,13 +32,13 @@ public class RegistrationPageTest extends TestBase{
 		tearDownDriver();
 	}
 	
-	@DataProvider(name = "credentials")
+	@DataProvider()
 	public Object[][] credentials(){
-		return excel.getTestData("credentials");
+		return excel.getTestData("UserInformation"); //Passing the sheet name of Excel file as parameter.
 	}
 	
-	@Test(dataProvider = "credentials",description = "User registration.")
-	public void userRegistrationTest(String fname,String lname,String email,String pwd,String subs) {
+	@Test(dataProvider = "credentials",description = "User registration form.")
+	public void userRegistrationTest(String fname,String lname,String email,String pwd,String subs) throws InterruptedException {
 		hp.clickOnMyAccount();
 		hp.clickOnRegister();
 		reg.enterFirstName(fname);
@@ -49,5 +49,4 @@ public class RegistrationPageTest extends TestBase{
 		reg.acceptTermsAndConditions();
 		reg.clickOnContinue();
 	}
-
 }
