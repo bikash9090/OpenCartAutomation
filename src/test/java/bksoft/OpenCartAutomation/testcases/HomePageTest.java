@@ -17,7 +17,8 @@ public class HomePageTest extends TestBase {
 	HomePage hp;
 	ProductsListPage prodlist;
 	Logger log = LogManager.getLogger(HomePageTest.class.getName());
-
+	
+	/*-----------------------------------------------BeforClass initialization-----------------------------------------------------------*/
 	@BeforeClass
 	public void initialization() {
 		log.info("Initializing driver object.");
@@ -31,7 +32,9 @@ public class HomePageTest extends TestBase {
 		log.info("Destroying driver object.");
 		tearDownDriver();
 	}
-
+	
+	/*-------------------------------------------------Home page test cases-------------------------------------------------------------*/
+	
 	@DataProvider
 	private String[][] currencyData() {
 		return new String[][] { { "Euro", "€" }, { "Pound", "£" }, { "Dollar", "$" } };
