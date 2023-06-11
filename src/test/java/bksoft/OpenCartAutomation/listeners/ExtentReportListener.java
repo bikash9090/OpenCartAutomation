@@ -6,6 +6,7 @@ import java.util.Date;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -35,12 +36,20 @@ public class ExtentReportListener implements ITestListener {
 
 	@Override
 	public synchronized void onTestStart(ITestResult result) {
-
+		
+		String testName;
 		String methodName = result.getMethod().getMethodName();
 		String qualifiedName = result.getMethod().getQualifiedName();
 
 		int last = qualifiedName.lastIndexOf(".");
 		int mid = qualifiedName.substring(0, last).lastIndexOf(".");
+		
+		Test testAnnotation = result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(Test.class);
+        if (testAnnotation != null) {
+            testName = testAnnotation.testName();
+        }else {
+        	testName = "NoDefined";
+        }
 
 		Object[] parameters = result.getParameters();
 		StringBuilder parameterValues = new StringBuilder();
@@ -53,7 +62,7 @@ public class ExtentReportListener implements ITestListener {
 		String parameterString = parameterValues.toString().replaceAll(", $", "");
 
 		String className = qualifiedName.substring(mid + 1, last);
-		String methodNamewithParam = methodName + "('" + parameterString + "')";
+		String methodNamewithParam = testName+"_"+methodName + "('" + parameterString + "')";
 
 		System.out.println(methodNamewithParam + " started!");
 
