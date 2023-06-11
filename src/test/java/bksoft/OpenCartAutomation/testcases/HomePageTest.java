@@ -8,6 +8,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import bksoft.OpenCartAutomation.base.TestBase;
 import bksoft.OpenCartAutomation.pages.HomePage;
@@ -61,9 +62,18 @@ public class HomePageTest extends TestBase {
 		hp.clickOnMyAccount();
 		hp.clickOnLogin();
 		
-		log.info("Asserting VerifyMyAccount test.");
-		assertTrue(hp.getTitle().equalsIgnoreCase("Account Login"));
+		log.info("Asserting Login page.");
+		SoftAssert softAssert = new SoftAssert();
+		softAssert.assertEquals(hp.getTitle(), "Account 2Login");
+		
+		hp.clickOnMyAccount();
+		hp.clickOnRegister();
+		
+		log.info("Asserting Register page.");
+		softAssert.assertEquals(hp.getTitle(), "Register 2Account");
+		softAssert.assertAll();
 		hp.navigateBack();
+		
+		
 	}
-
 }
