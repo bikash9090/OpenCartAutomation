@@ -24,7 +24,6 @@ public class PageBase {
 
 	protected void click(WebElement element) {
 		element.click();
-		log.debug("Clicked successful...");
 	}
 
 	protected void flashAndclick(WebElement element) {
@@ -50,7 +49,6 @@ public class PageBase {
 
 		js.executeScript("arguments[0].setAttribute('style','border: solid 2px white')", element);
 
-		log.debug("Flashed successful...");
 	}
 
 	protected void moveToElement(WebElement element) {
