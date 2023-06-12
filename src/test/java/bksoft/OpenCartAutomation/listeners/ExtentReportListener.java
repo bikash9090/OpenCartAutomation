@@ -36,21 +36,25 @@ public class ExtentReportListener implements ITestListener {
 
 	@Override
 	public synchronized void onTestStart(ITestResult result) {
-		
+
 		String testName;
 		String methodName = result.getMethod().getMethodName();
 		String qualifiedName = result.getMethod().getQualifiedName();
 
 		int last = qualifiedName.lastIndexOf(".");
 		int mid = qualifiedName.substring(0, last).lastIndexOf(".");
-		
-		Test testAnnotation = result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(Test.class);
-        if (testAnnotation != null) {
-            testName = testAnnotation.testName();
-        }else {
-        	testName = "NoDefined";
-        }
 
+		String className = qualifiedName.substring(mid + 1, last);
+
+		/*-------------------------Retrieving the testName from @Test(testName)--------------------------*/
+		Test testAnnotation = result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(Test.class);
+		if (testAnnotation != null) {
+			testName = testAnnotation.testName();
+		} else {
+			testName = "NoDefined";
+		}
+		
+		/*-----------------------Retrieving the parameters of method---------------------------*/
 		Object[] parameters = result.getParameters();
 		StringBuilder parameterValues = new StringBuilder();
 
@@ -58,15 +62,14 @@ public class ExtentReportListener implements ITestListener {
 			parameterValues.append(parameter).append(", ");
 		}
 
-		// Remove the trailing comma and space
-		String parameterString = parameterValues.toString().replaceAll(", $", "");
-
-		String className = qualifiedName.substring(mid + 1, last);
-		String methodNamewithParam = testName+"_"+methodName + "('" + parameterString + "')";
+		String parameterString = parameterValues.toString().replaceAll(", $", "");// Remove the trailing comma and space
+		String methodNamewithParam = testName + "_" + methodName + "('" + parameterString + "')"; // Combined the testName+methodname+methodParameters
 
 		System.out.println(methodNamewithParam + " started!");
 
+		/*---------------------Create extent test in extent report----------------------------*/
 		test = extent.createTest(methodNamewithParam, result.getMethod().getDescription());
+		System.out.println(result.getTestName());
 
 		test.assignCategory(result.getTestContext().getSuite().getName());
 		test.assignCategory(className);
@@ -75,23 +78,23 @@ public class ExtentReportListener implements ITestListener {
 
 	@Override
 	public synchronized void onTestSuccess(ITestResult result) {
-
+		/*---------------------Adding Success status to extent test------------------------*/
 		test.log(Status.PASS, "Test Passed");
 		System.out.println("Test Passed!");
 	}
 
 	@Override
 	public synchronized void onTestFailure(ITestResult result) {
-
+		/*--------------------Capture screenshot and add to extent test------------------------*/
 		scrObj = new ScreenshotUtils(DriverFactory.getDriver());
-
 		String imgPath = scrObj.getScreenshot(result.getName());
-
 		test.addScreenCaptureFromPath(imgPath);
-		test.getModel().setEndTime(getTime(result.getEndMillis()));
-
+		
+		/*---------------------Adding failed log details to extent test------------------------*/
 		test.log(Status.FAIL, "Test Failed");
 		test.log(Status.FAIL, result.getThrowable().getMessage());
+		
+		test.getModel().setEndTime(getTime(result.getEndMillis())); //Adding test end time to report.
 
 		System.out.println("Test failed!");
 
@@ -99,18 +102,20 @@ public class ExtentReportListener implements ITestListener {
 
 	@Override
 	public synchronized void onTestSkipped(ITestResult result) {
-
-		test = extent.createTest(result.getName());
-		test.log(Status.SKIP, "Test Skipped");
-		test.log(Status.SKIP, result.getThrowable().getMessage());
-		String methodName = result.getMethod().getMethodName();
-		System.out.println((methodName + " skipped!"));
-
+		/*---------------------Capture screenshot and add to extent test------------------------*/
 		scrObj = new ScreenshotUtils(DriverFactory.getDriver());
 		String imgPath = scrObj.getScreenshot(result.getName());
 		test.addScreenCaptureFromPath(imgPath);
-
-		test.getModel().setEndTime(getTime(result.getEndMillis()));
+		
+		/*----------------------Adding skipped log details to extent test-----------------------*/
+		test = extent.createTest(result.getName());
+		test.log(Status.SKIP, "Test Skipped");
+		test.log(Status.SKIP, result.getThrowable().getMessage());
+		
+		test.getModel().setEndTime(getTime(result.getEndMillis())); //Adding test end time to report.
+		
+		String methodName = result.getMethod().getMethodName();
+		System.out.println((methodName + " skipped!"));
 	}
 
 	@Override
