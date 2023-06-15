@@ -34,10 +34,10 @@ public class RegistrationPageTest extends TestBase{
 	
 	@DataProvider()
 	public Object[][] credentials(){
-		return excel.getTestData("UserInformation"); //Passing the sheet name of Excel file as parameter.
+		return excel.getTestData("UserInformation"); //Passing the sheet name of Excel file to read data.
 	}
 	
-	@Test(dataProvider = "credentials",description = "User registration form.")
+	@Test(testName = "TC-reg-009",dataProvider = "credentials",description = "Verify the user is able to register using valid user information.")
 	public void userRegistrationTest(String fname,String lname,String email,String pwd,String subs) throws InterruptedException {
 		hp.clickOnMyAccount();
 		hp.clickOnRegister();
