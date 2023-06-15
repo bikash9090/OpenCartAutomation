@@ -69,8 +69,6 @@ public class ExtentReportListener implements ITestListener {
 
 		/*---------------------Create extent test in extent report----------------------------*/
 		test = extent.createTest(methodNamewithParam, result.getMethod().getDescription());
-		System.out.println(result.getTestName());
-
 		test.assignCategory(result.getTestContext().getSuite().getName());
 		test.assignCategory(className);
 
@@ -107,7 +105,7 @@ public class ExtentReportListener implements ITestListener {
 		String imgPath = scrObj.getScreenshot(result.getName());
 		test.addScreenCaptureFromPath(imgPath);
 		
-		/*----------------------Adding skipped log details to extent test-----------------------*/
+		/*---------------------Adding skipped log details to extent test----------------------*/
 		test = extent.createTest(result.getName());
 		test.log(Status.SKIP, "Test Skipped");
 		test.log(Status.SKIP, result.getThrowable().getMessage());
