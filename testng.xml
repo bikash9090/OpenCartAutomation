@@ -8,7 +8,9 @@
 	</listeners>
 	<test thread-count="5" name="Test">
 		<classes>
-			<class name="bksoft.OpenCartAutomation.testcases.HomePageTest" />
+			<class name="bksoft.OpenCartAutomation.testcases.HomePageTest"/>
+			<class name="bksoft.OpenCartAutomation.testcases.RegistrationPageTest"/>
+			<class name="bksoft.OpenCartAutomation.testcases.LoginPageTest"/>
 		</classes>
 	</test>
 </suite>
