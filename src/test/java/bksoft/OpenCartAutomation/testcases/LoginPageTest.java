@@ -32,7 +32,7 @@ public class LoginPageTest extends TestBase {
 		return new ExcelUtils().getTestData("LoginCredentials");// Passing the sheet name of Excel file as parameter.
 	}
 
-	@Test(dataProvider = "LoginCredentials", description = "User login form.")
+	@Test(testName = "TS_login_003",dataProvider = "LoginCredentials", description = "Verify the user login using valid/invalid credentials.")
 	public void loginToAccountTest(String uname, String pwd) {
 		hp.clickOnMyAccount();
 		hp.clickOnLogin();
