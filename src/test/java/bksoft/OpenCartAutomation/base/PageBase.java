@@ -27,6 +27,7 @@ public class PageBase {
 	}
 
 	protected void flashAndclick(WebElement element) {
+		scrolToElement(element);
 		flash(element);
 		click(element);
 	}
