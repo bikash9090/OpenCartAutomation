@@ -1,18 +1,29 @@
 package bksoft.OpenCartAutomation.base;
 
+import java.time.Duration;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class PageBase {
 
 	protected WebDriver driver;
-	Actions action;
-	JavascriptExecutor jsx;
+	private Actions action;
+	private JavascriptExecutor jsx;
+	private WebDriverWait wait;
+	private int fluentTimeoutinSec = 10;
+	private int fluentPollinginMilli = 500;
+	private int webDriverWaitinSec = 10;
 
 	Logger log = LogManager.getLogger(PageBase.class.getName());
 
@@ -20,7 +31,35 @@ public class PageBase {
 		this.driver = driver;
 		action = new Actions(driver);
 		jsx = (JavascriptExecutor) driver;
+		wait = new WebDriverWait(driver, Duration.ofSeconds(webDriverWaitinSec));
 	}
+	
+	protected void waitForElementToBeVisible(WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    protected void waitForElementToBeClickable(WebElement element) {
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    protected void fluentWaitForElementToBeVisible(WebElement element) {
+        Wait<WebDriver> fluentWait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(fluentTimeoutinSec))
+                .pollingEvery(Duration.ofMillis(fluentPollinginMilli))
+                .ignoring(NoSuchElementException.class);
+
+        fluentWait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    protected void fluentWaitForElementToBeClickable(WebElement element) {
+        Wait<WebDriver> fluentWait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(fluentTimeoutinSec))
+                .pollingEvery(Duration.ofMillis(fluentPollinginMilli))
+                .ignoring(NoSuchElementException.class);
+
+        fluentWait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+	
 
 	protected void click(WebElement element) {
 		element.click();
