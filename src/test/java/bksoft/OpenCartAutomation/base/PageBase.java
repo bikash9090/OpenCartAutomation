@@ -19,10 +19,10 @@ public class PageBase {
 
 	protected WebDriver driver;
 	private Actions action;
-	private JavascriptExecutor jsx;
+	protected JavascriptExecutor jsx;
 	private WebDriverWait wait;
 	private int fluentTimeoutinSec = 10;
-	private int fluentPollinginMilli = 500;
+	private int fluentPollinginMilli = 1000;
 	private int webDriverWaitinSec = 10;
 
 	Logger log = LogManager.getLogger(PageBase.class.getName());
@@ -58,6 +58,7 @@ public class PageBase {
                 .ignoring(NoSuchElementException.class);
 
         fluentWait.until(ExpectedConditions.elementToBeClickable(element));
+        System.out.println("Fluent wait performed....");
     }
 	
 
@@ -66,6 +67,7 @@ public class PageBase {
 	}
 
 	protected void flashAndclick(WebElement element) {
+		fluentWaitForElementToBeVisible(element);
 		scrolToElement(element);
 		flash(element);
 		click(element);
@@ -75,6 +77,12 @@ public class PageBase {
 		element.sendKeys(keyword);
 		log.debug("Given text entered successful...");
 	}
+	
+	protected void enterTextUsingJavaScript(WebElement element, String keyword) {
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("arguments[0].value = arguments[1]", element, keyword);
+	}
+	
 
 	protected void flash(WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor) driver; // downcasting
@@ -82,7 +90,7 @@ public class PageBase {
 		js.executeScript("arguments[0].setAttribute('style','background: yellow; border: solid 5px red')", element);
 
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -121,6 +129,12 @@ public class PageBase {
 	public void navigateForward() {
 		driver.navigate().forward();
 		log.debug("Navigate forward successful...");
+		try {
+			Thread.sleep(fluentPollinginMilli);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void navigateBack() {
