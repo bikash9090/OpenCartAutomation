@@ -159,5 +159,7 @@ public class PageBase {
 		return url;
 	}
 	
-
+	public void refresh() {
+		
+	}
 }
