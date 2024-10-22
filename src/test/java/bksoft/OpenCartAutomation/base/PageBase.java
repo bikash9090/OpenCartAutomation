@@ -158,4 +158,8 @@ public class PageBase {
 		log.info("URL of the page is : [" + url + "]");
 		return url;
 	}
+	
+	public void refresh() {
+		
+	}
 }
